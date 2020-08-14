@@ -1,45 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import axios from 'axios';
 import './index.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 
-function App() {
+// Components
+import Header from './Components/Header';
 
-  const [userName, getUsername] = useState('');
+const App = () => {
 
-  const User = () => {
-    getUsername('doug');
-    return (
-      <div>
-        <p>Hello {userName}</p>
-      </div>
-    )
-  }
+  const [userInfo, getUserInfo] = useState({});
 
-  {/* redirect to /UserInfo, with the userName value being a param propped into UserInfo */ }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  }
+  const apiCall = ((value) => {
+    axios({
+      method: 'get',
+      url: `https://api.github.com/users/${value}`
+    }).then((response) => {
+      getUserInfo(response.data);
+    });
+  });
 
   return (
-    <BrowserRouter>
+    <>
       <div className="wrapper">
-        <header>
-          <h1>Git Check</h1>
-          <Route exact path="/">
-            <form onSubmit={handleSubmit}>
-              <label className="sr-only" htmlFor="username">Enter your username</label>
-              <input
-                name="username"
-                type="text"
-                value={userName}
-                onChange={e => getUsername(e.target.value)}
-              />
-            </form>
-          </Route>
-        </header>
-        <Route exact path="/user" component={User} />
+        <Header apiCall={apiCall} />
+        <main>
+          <section>
+            <div className="user-container">
+              <img src={userInfo.avatar_url} alt={userInfo.name} />
+              <h2>{userInfo.name}</h2>
+              <a href={userInfo.html_url}>@{userInfo.login}</a>
+              <div className="location-joined-container">
+                <p><FontAwesomeIcon icon={faMapMarkerAlt} />{userInfo.location}</p>
+                <p><FontAwesomeIcon icon={faCalendarAlt} />Member since: {userInfo.created_at}</p>
+              </div>
+              <p>{userInfo.blog}</p>
+              <p>Repos: {userInfo.public_repos}</p>
+              <p>Gists: {userInfo.public_gists}</p>
+            </div>
+          </section>
+        </main>
       </div>
-    </BrowserRouter>
+    </>
   )
 }
 
