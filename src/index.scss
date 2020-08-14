@@ -62,8 +62,10 @@ button {
 
 // Header.js
 header {
-  padding: 20px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 300px;
   h1 {
     font-size: 40px;
     margin-bottom: 25px;
@@ -72,6 +74,7 @@ header {
     border: none;
     padding: 20px;
     border-radius: 2px;
+    width: 250px;
   }
 }
 

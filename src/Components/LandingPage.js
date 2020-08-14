@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 
-const Header = (props) => {
+const LandingPage = (props) => {
 
   const [userName, getUsername] = useState('');
 
@@ -8,6 +9,7 @@ const Header = (props) => {
     e.preventDefault();
     getUsername('');
     props.apiCall(userName);
+    props.history.push('/user');
   }
 
   const handleChange = (e) => {
@@ -31,4 +33,4 @@ const Header = (props) => {
   )
 }
 
-export default Header;
+export default withRouter(LandingPage);
