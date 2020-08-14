@@ -18,12 +18,12 @@ const Header = (props) => {
     <header>
       <h1>Git Check</h1>
       <form onSubmit={handleSubmit}>
-        <label className="sr-only" htmlFor="username">Enter your username</label>
+        <label className="sr-only" htmlFor="username">Enter a GitHub username</label>
         <input
           name="username"
           type="text"
           value={userName}
-          placeholder='Enter your username'
+          placeholder='Enter a GitHub username'
           onChange={handleChange}
         />
       </form>

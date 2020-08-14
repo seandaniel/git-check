@@ -8,11 +8,20 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
-// body {
-//   font-family: primary-font;
-//   color: primary-color;
-//   background: tertiary-color;
-// }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+// variables
+$primaryColor: #f4f4f4;
+$secondaryColor: #24292e;
+$tertiaryColor: #c871e8;
+$primaryFont: 'Roboto', serif;
+
+body {
+  font-family: $primaryFont;
+  color: $primaryColor;
+  background: $secondaryColor;
+}
 
 h1, h2, h3 {
   margin: 0;
@@ -49,4 +58,52 @@ button {
   max-width: 1100px;
   width: 95%;
   margin: 0 auto;
+}
+
+// Header.js
+header {
+  padding: 20px;
+
+  h1 {
+    font-size: 40px;
+    margin-bottom: 25px;
+  }
+  input {
+    border: none;
+    padding: 20px;
+    border-radius: 2px;
+  }
+}
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 150px;
+  img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 25px;
+    border: 5px solid $tertiaryColor;
+  }
+  h2 {
+    font-size: 40px;
+    margin-bottom: 25px;
+  }
+}
+
+.user-container a {
+  color: $tertiaryColor;
+  transition: color .35s;
+  margin-bottom: 25px;
+  font-size: 20px;
+  &:hover,
+  &:focus {
+    color: $primaryColor;
+  }
+}
+
+.location-joined-container {
+  display: flex;
 }
