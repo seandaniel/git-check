@@ -7,7 +7,7 @@ const Header = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     getUsername('');
-    props.handleUserName(userName);
+    props.apiCall(userName);
   }
 
   const handleChange = (e) => {
