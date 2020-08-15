@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaCalendarAlt } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
 import './index.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 
 // Components
 import LandingPage from './Components/LandingPage';
@@ -30,13 +30,14 @@ const App = () => {
           <Route exact path="/user">
             <main>
               <section>
+                <Link className="back-button" to="/"><FaArrowLeft />Search again</Link>
                 <div className="user-container">
                   <img src={userInfo.avatar_url} alt={userInfo.name} />
                   <h2>{userInfo.name}</h2>
                   <a href={userInfo.html_url}>@{userInfo.login}</a>
                   <div className="location-joined-container">
-                    <p><FontAwesomeIcon icon={faMapMarkerAlt} />{userInfo.location}</p>
-                    <p><FontAwesomeIcon icon={faCalendarAlt} />Member since: {userInfo.created_at}</p>
+                    <p><FaMapMarkerAlt />{userInfo.location}</p>
+                    <p><FaCalendarAlt />Member since: {userInfo.created_at}</p>
                   </div>
                   <p>{userInfo.blog}</p>
                   <p>Repos: {userInfo.public_repos}</p>

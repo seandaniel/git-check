@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import { DiGithubBadge } from 'react-icons/di';
 
 const LandingPage = (props) => {
 
@@ -18,7 +19,10 @@ const LandingPage = (props) => {
 
   return (
     <header>
-      <h1>Git Check</h1>
+      <div className="icon-h1-container">
+        <DiGithubBadge />
+        <h1>Git Check</h1>
+      </div>
       <form onSubmit={handleSubmit}>
         <label className="sr-only" htmlFor="username">Enter a GitHub username</label>
         <input
