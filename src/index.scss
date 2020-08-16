@@ -85,7 +85,7 @@ header {
 input {
   border: none;
   padding: 20px;
-  border-radius: 2px;
+  border-radius: 5px;
   background-color: inherit;
   color: white;
   width: 300px;
@@ -99,7 +99,6 @@ input {
     color: $secondaryColor;
   }
 }
-
 
 // App.js
 .back-button {
@@ -122,28 +121,39 @@ input {
   }
 }
 
-.user-container {
+.bio-chart-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 100px 0;
+}
+
+.chart {
+  width: 400px;
+  height: 400px;
+  background-color: white;
+}
+
+.bio-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 150px;
   img {
     height: 200px;
     width: 200px;
     border-radius: 50%;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     border: 5px solid $tertiaryColor;
   }
   h2 {
     font-size: 40px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 }
 
-.user-container a {
+.bio-container a {
   color: $tertiaryColor;
   transition: color .35s;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   font-size: 20px;
   &:hover,
   &:focus {
@@ -151,6 +161,58 @@ input {
   }
 }
 
-.location-joined-container {
+.location-joined-repo-container {
   display: flex;
+}
+
+.location-joined-container {
+  margin-bottom: 20px;
+  p:first-child {
+    margin: 0 30px 10px 0;
+  }
+  svg {
+    color: darken($primaryColor, 40%)
+  }
+}
+
+.repos {
+  
+}
+
+.repo-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  .repo-card {
+    background-color: $primaryColor;
+    color: $secondaryColor;
+    width: 320px;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 70px;
+    a {
+      display: inline-block;
+      color: $tertiaryColor;
+      font-size: 20px;
+      transition: color .35s;
+      margin-bottom: 20px;
+      &:hover,
+      &:focus {
+        color: $secondaryColor;
+      }
+    }
+  }
+}
+
+.description {
+  min-height: 18.4px;
+  margin-bottom: 20px;
+}
+
+.language-date-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 3px solid $tertiaryColor;
+  max-height: 41.0667px;
 }
