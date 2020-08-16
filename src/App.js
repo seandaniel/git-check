@@ -46,10 +46,15 @@ const App = () => {
                     <a href={userInfo.html_url}>@{userInfo.login}</a>
                     <div className="location-joined-repo-container">
                       <div className="location-joined-container">
-                        <p><FaMapMarkerAlt /> {userInfo.location}</p>
+                        {
+                          !userInfo.location
+                            ? <p><FaMapMarkerAlt /> Planet Earth</p>
+                            : <p><FaMapMarkerAlt /> {userInfo.location}</p>
+                        }
+
                         <p><FaCalendarAlt /> Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
                       </div>
-                      <p class="repos">Repos: {userInfo.public_repos}</p>
+                      <p class="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
                     </div>
                     <a href={userInfo.blog}>{userInfo.blog}</a>
                   </div>
@@ -65,6 +70,7 @@ const App = () => {
                 </div>
               </section>
               <section>
+                <h3>Repositories</h3>
                 <div className="repo-container">
                   {
                     repoInfo.map((repo) => {
