@@ -14,7 +14,6 @@ const App = () => {
   const [userInfo, getUserInfo] = useState({});
   const [repoInfo, getRepoInfo] = useState([]);
 
-
   const apiCall = ((value) => {
     axios({
       method: 'get',

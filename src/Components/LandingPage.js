@@ -8,9 +8,9 @@ const LandingPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getUsername('');
     props.apiCall(userName);
     props.history.push('/user');
+    getUsername('');
   }
 
   const handleChange = (e) => {
