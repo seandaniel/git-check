@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Chart from 'chart.js'
 import Moment from 'react-moment';
 import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa';
 import './index.scss';
@@ -13,6 +14,7 @@ const App = () => {
 
   const [userInfo, getUserInfo] = useState({});
   const [repoInfo, getRepoInfo] = useState([]);
+  const [totalLanguages, getTotalLanguages] = useState([]);
 
   const apiCall = ((value) => {
     axios({
@@ -26,6 +28,25 @@ const App = () => {
       url: `https://api.github.com/users/${value}/repos`
     }).then((response) => {
       getRepoInfo(response.data);
+
+      const repos = response.data;
+
+      let languagesArray = [];
+
+      repos.map((repo) => {
+        languagesArray.push(repo.language);
+      })
+
+      const languagesObject = languagesArray.reduce((obj, repo) => {
+        if (!obj[repo]) {
+          obj[repo] = 0;
+        }
+        obj[repo]++;
+        return obj;
+      }, {})
+
+      getTotalLanguages(languagesObject);
+
     });
   });
 
@@ -50,21 +71,14 @@ const App = () => {
                             ? <p><FaMapMarkerAlt /> Planet Earth</p>
                             : <p><FaMapMarkerAlt /> {userInfo.location}</p>
                         }
-
                         <p><FaCalendarAlt /> Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
                       </div>
-                      <p class="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
+                      <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
                     </div>
                     <a href={userInfo.blog}>{userInfo.blog}</a>
                   </div>
                   <div className="chart">
-                    {
-                      repoInfo.map((repo) => {
-                        return (
-                          <p>{repo.language}</p>
-                        )
-                      })
-                    }
+
                   </div>
                 </div>
               </section>
