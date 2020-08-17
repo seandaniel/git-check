@@ -123,14 +123,9 @@ input {
 
 .bio-chart-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
   margin: 100px 0;
-}
-
-.chart {
-  width: 400px;
-  height: 400px;
-  background-color: white;
 }
 
 .bio-container {
@@ -188,6 +183,17 @@ input {
       margin-bottom: 5px;
     }
   }
+}
+
+.pie-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartjs-render-monitor {
+  width: 800px;
+  // margin: 0 -50px;
 }
 
 h3 {

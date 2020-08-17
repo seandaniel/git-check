@@ -4,17 +4,17 @@ import { DiGithubBadge } from 'react-icons/di';
 
 const LandingPage = (props) => {
 
-  const [userName, getUsername] = useState('');
+  const [userName, setUsername] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.apiCall(userName);
     props.history.push('/user');
-    getUsername('');
+    setUsername('');
   }
 
   const handleChange = (e) => {
-    getUsername(e.target.value)
+    setUsername(e.target.value)
   }
 
   return (

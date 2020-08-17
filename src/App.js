@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
-import Chart from 'chart.js'
+import { Pie } from 'react-chartjs-2';
 import Moment from 'react-moment';
 import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa';
 import './index.scss';
@@ -12,22 +12,23 @@ import LandingPage from './Components/LandingPage';
 
 const App = () => {
 
-  const [userInfo, getUserInfo] = useState({});
-  const [repoInfo, getRepoInfo] = useState([]);
-  const [totalLanguages, getTotalLanguages] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+  const [repoInfo, setRepoInfo] = useState([]);
+  const [languageNames, setLanguageNames] = useState([]);
+  const [totalLanguages, setTotalLanguages] = useState([]);
 
   const apiCall = ((value) => {
     axios({
       method: 'get',
       url: `https://api.github.com/users/${value}`
     }).then((response) => {
-      getUserInfo(response.data);
+      setUserInfo(response.data);
     });
     axios({
       method: 'get',
       url: `https://api.github.com/users/${value}/repos`
     }).then((response) => {
-      getRepoInfo(response.data);
+      setRepoInfo(response.data);
 
       const repos = response.data;
 
@@ -45,7 +46,12 @@ const App = () => {
         return obj;
       }, {})
 
-      getTotalLanguages(languagesObject);
+      let languageNames = Object.keys(languagesObject);
+
+      let totalLanguages = Object.values(languagesObject);
+
+      setLanguageNames(languageNames);
+      setTotalLanguages(totalLanguages);
 
     });
   });
@@ -77,8 +83,24 @@ const App = () => {
                     </div>
                     <a href={userInfo.blog}>{userInfo.blog}</a>
                   </div>
-                  <div className="chart">
-
+                  <div className="pie-container">
+                    <Pie
+                      data={{
+                        labels: languageNames,
+                        datasets: [
+                          {
+                            label: 'Global Status',
+                            backgroundColor: ['#a6d4fa90', '#81c78490', '#e5737390'],
+                            data: totalLanguages,
+                          },
+                        ],
+                      }}
+                      options={{
+                        legend: {
+                          position: 'bottom'
+                        },
+                      }}
+                    />
                   </div>
                 </div>
               </section>
