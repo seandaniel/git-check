@@ -15,7 +15,7 @@ const App = () => {
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
   const [languageNames, setLanguageNames] = useState([]);
-  const [totalLanguages, setTotalLanguages] = useState([]);
+  const [languageTotals, setLanguageTotals] = useState([]);
 
   const apiCall = ((value) => {
     axios({
@@ -31,7 +31,6 @@ const App = () => {
       setRepoInfo(response.data);
 
       const repos = response.data;
-
       let languagesArray = [];
 
       repos.map((repo) => {
@@ -39,19 +38,24 @@ const App = () => {
       })
 
       const languagesObject = languagesArray.reduce((obj, repo) => {
+        // if we do not have that property, add it with the value of 0
         if (!obj[repo]) {
           obj[repo] = 0;
         }
+        // if we do have that property, add one to the value
         obj[repo]++;
         return obj;
       }, {})
 
       let languageNames = Object.keys(languagesObject);
+      let languageTotals = Object.values(languagesObject);
 
-      let totalLanguages = Object.values(languagesObject);
+      // find null and replace with 'Not Specified'
+      const index = languageNames.indexOf('null');
+      languageNames.splice(index, 1, 'Not Specified');
 
       setLanguageNames(languageNames);
-      setTotalLanguages(totalLanguages);
+      setLanguageTotals(languageTotals);
 
     });
   });
@@ -91,7 +95,7 @@ const App = () => {
                           {
                             label: 'Global Status',
                             backgroundColor: ['#a6d4fa90', '#81c78490', '#e5737390'],
-                            data: totalLanguages,
+                            data: languageTotals,
                           },
                         ],
                       }}
