@@ -156,7 +156,6 @@ input {
   }
 }
 
-
 .location-joined-container p:first-child {
   margin: 0 30px 10px 0;
 }
@@ -238,4 +237,22 @@ h3 {
   justify-content: space-between;
   padding-top: 20px;
   border-top: 3px solid $tertiaryColor;
+}
+
+// LoadingAnimation.js
+.loading-container {
+  font-size: 80px;
+  margin: 120px auto 200px;
+  svg {
+    animation: spin 2s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
 }
