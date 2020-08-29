@@ -124,7 +124,14 @@ const App = () => {
                         </div>
                         <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
                       </div>
-                      <a href={userInfo.blog}>{userInfo.blog}</a>
+                      {
+                        !userInfo.blog.includes('http')
+                          ? <a href={`https:${userInfo.blog}`}>{userInfo.blog}</a>
+                          : <a href={`${userInfo.blog}`}>{userInfo.blog}</a>
+                      }
+
+
+
                     </div>
                     <div className="chart-container">
                       <h3>Top Languages</h3>
