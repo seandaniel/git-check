@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Pie } from 'react-chartjs-2';
+import { Chart } from 'react-chartjs-2';
 import Moment from 'react-moment';
 import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa';
 import './index.scss';
@@ -13,11 +13,15 @@ import LoadingAnimation from './Components/LoadingAnimation';
 
 const App = () => {
 
+
+
+
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
   const [languageNames, setLanguageNames] = useState([]);
   const [languageTotals, setLanguageTotals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [languageColors, setLanguageColors] = useState([])
 
   async function apiCall(value) {
 
@@ -63,6 +67,35 @@ const App = () => {
       setLanguageTotals(languageTotals);
       setIsLoading(false);
 
+      const shuffle = (array) => {
+        for (let j, x, i = array.length; i; j = parseInt(Math.random() * i),
+          x = array[--i], array[i] = array[j], array[j] = x);
+        return array;
+      };
+
+      let languageColors = ['#4b89d0', '#8653c4', '#cb54b6', '#cb4c4c', '#2d3b8f', '#e3d532', '#2ed296', '#8cc3d4', '#cf722e', '#89ce30'];
+
+      setLanguageColors(shuffle(languageColors));
+
+      const ctx = document.getElementById('myChart');
+      const myChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: languageNames,
+          datasets: [
+            {
+              data: languageTotals,
+              backgroundColor: languageColors,
+            },
+          ],
+        },
+        options: {
+          legend: {
+            position: 'right',
+          },
+        }
+      });
+
     } catch (err) {
       console.log(err)
     }
@@ -98,24 +131,9 @@ const App = () => {
                       </div>
                       <a href={userInfo.blog}>{userInfo.blog}</a>
                     </div>
-                    <div className="pie-container">
-                      <Pie
-                        data={{
-                          labels: languageNames,
-                          datasets: [
-                            {
-                              label: 'Global Status',
-                              backgroundColor: ['#a6d4fa90', '#81c78490', '#e5737390'],
-                              data: languageTotals,
-                            },
-                          ],
-                        }}
-                        options={{
-                          legend: {
-                            position: 'bottom'
-                          },
-                        }}
-                      />
+                    <div className="chart-container">
+                      <h3>Top Languages</h3>
+                      <canvas id="myChart" height="350" width="410" />
                     </div>
                   </div>
                 </section>

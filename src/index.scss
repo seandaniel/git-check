@@ -123,7 +123,7 @@ input {
 
 .bio-chart-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 100px 0;
 }
@@ -184,15 +184,16 @@ input {
   }
 }
 
-.pie-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+.chart-container {
+  padding: 20px 20px 0;
+  background: $primaryColor;
+  border-radius: 5px;
+  h3 {
+    text-align: center;
+    margin-bottom: 0;
+    color: $secondaryColor;
 
-.chartjs-render-monitor {
-  width: 800px;
-  // margin: 0 -50px;
+  }
 }
 
 h3 {
