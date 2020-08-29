@@ -18,10 +18,10 @@ const App = () => {
 
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
-  const [languageNames, setLanguageNames] = useState([]);
-  const [languageTotals, setLanguageTotals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [languageColors, setLanguageColors] = useState([])
+  // const [languageNames, setLanguageNames] = useState([]);
+  // const [languageTotals, setLanguageTotals] = useState([]);
+  // const [languageColors, setLanguageColors] = useState([])
 
   async function apiCall(value) {
 
@@ -52,19 +52,14 @@ const App = () => {
         return obj;
       }, {})
 
+      delete languagesObject.null;
+
       let languageNames = Object.keys(languagesObject);
       let languageTotals = Object.values(languagesObject);
 
-      // find null and replace with 'Not Specified'
-      const index = languageNames.indexOf('null');
+      // setLanguageNames(languageNames);
+      // setLanguageTotals(languageTotals);
 
-      // indexOf brings back -1 by default if there is no item found ('null')
-      if (index !== -1) {
-        languageNames.splice(index, 1, 'Not Specified');
-      }
-
-      setLanguageNames(languageNames);
-      setLanguageTotals(languageTotals);
       setIsLoading(false);
 
       const shuffle = (array) => {
@@ -75,10 +70,10 @@ const App = () => {
 
       let languageColors = ['#4b89d0', '#8653c4', '#cb54b6', '#cb4c4c', '#2d3b8f', '#e3d532', '#2ed296', '#8cc3d4', '#cf722e', '#89ce30'];
 
-      setLanguageColors(shuffle(languageColors));
+      shuffle(languageColors);
 
-      const ctx = document.getElementById('myChart');
-      const myChart = new Chart(ctx, {
+      const ctx = document.getElementById('top-languages');
+      new Chart(ctx, {
         type: "pie",
         data: {
           labels: languageNames,
@@ -133,7 +128,7 @@ const App = () => {
                     </div>
                     <div className="chart-container">
                       <h3>Top Languages</h3>
-                      <canvas id="myChart" height="350" width="410" />
+                      <canvas id="top-languages" height="350" width="410" />
                     </div>
                   </div>
                 </section>
