@@ -127,10 +127,10 @@ const App = () => {
                       {
                         !userInfo.blog.includes('http')
                           ? <a href={`https:${userInfo.blog}`}>{userInfo.blog}</a>
-                          : <a href={`${userInfo.blog}`}>{userInfo.blog}</a>
+                          : userInfo.blog.includes('https://')
+                            ? <a href={`${userInfo.blog}`}>{userInfo.blog.slice(8)}</a>
+                            : <a href={`${userInfo.blog}`}>{userInfo.blog.slice(7)}</a>
                       }
-
-
 
                     </div>
                     <div className="chart-container">
