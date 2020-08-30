@@ -10,15 +10,14 @@ import './index.scss';
 // Components
 import LandingPage from './Components/LandingPage';
 import LoadingAnimation from './Components/LoadingAnimation';
+import Error from './Components/Error';
 
 const App = () => {
-
-
-
 
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [results, setResults] = useState(false)
   // const [languageNames, setLanguageNames] = useState([]);
   // const [languageTotals, setLanguageTotals] = useState([]);
   // const [languageColors, setLanguageColors] = useState([])
@@ -61,6 +60,7 @@ const App = () => {
       // setLanguageTotals(languageTotals);
 
       setIsLoading(false);
+      setResults(true);
 
       const shuffle = (array) => {
         for (let j, x, i = array.length; i; j = parseInt(Math.random() * i),
@@ -92,7 +92,8 @@ const App = () => {
       });
 
     } catch (err) {
-      console.log(err)
+      setIsLoading(false);
+      setResults(false);
     }
 
   }
@@ -103,62 +104,68 @@ const App = () => {
         <div className="wrapper">
           <Route exact path="/" component={() => <LandingPage apiCall={apiCall} />} />
           <Route exact path="/user">
-            {isLoading
-              ? <LoadingAnimation />
-              : <main>
-                <section>
-                  <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
-                  <div className="bio-chart-container">
-                    <div className="bio-container">
-                      <img src={userInfo.avatar_url} alt={userInfo.name} />
-                      <h2>{userInfo.name}</h2>
-                      <a href={userInfo.html_url}>@{userInfo.login}</a>
-                      <div className="location-joined-repo-container">
-                        <div className="location-joined-container">
+            {
+              isLoading
+                ? <LoadingAnimation />
+                : !results
+                  ? <Error />
+                  : <main>
+                    <section>
+                      <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
+                      <div className="bio-chart-container">
+                        <div className="bio-container">
+                          <img src={userInfo.avatar_url} alt={userInfo.name} />
                           {
-                            !userInfo.location
-                              ? <p><FaMapMarkerAlt /> Planet Earth</p>
-                              : <p><FaMapMarkerAlt /> {userInfo.location}</p>
+                            userInfo.name
+                              ? <h2>{userInfo.name}</h2>
+                              : <h2>{userInfo.login}</h2>
                           }
-                          <p><FaCalendarAlt /> Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
-                        </div>
-                        <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
-                      </div>
-                      {
-                        !userInfo.blog.includes('http')
-                          ? <a href={`https:${userInfo.blog}`}>{userInfo.blog}</a>
-                          : userInfo.blog.includes('https://')
-                            ? <a href={`${userInfo.blog}`}>{userInfo.blog.slice(8)}</a>
-                            : <a href={`${userInfo.blog}`}>{userInfo.blog.slice(7)}</a>
-                      }
-
-                    </div>
-                    <div className="chart-container">
-                      <h3>Top Languages</h3>
-                      <canvas id="top-languages" height="350" width="410" />
-                    </div>
-                  </div>
-                </section>
-                <section>
-                  <h3>Repositories</h3>
-                  <div className="repo-container">
-                    {
-                      repoInfo.map((repo) => {
-                        return (
-                          <div className="repo-card" key={repo.node_id}>
-                            <a href={repo.html_url}>{repo.name}</a>
-                            <p className="description">{repo.description}</p>
-                            <div className="language-date-container">
-                              <p>{repo.language}</p>
-                              <p><Moment format="MMMM DD, YYYY">{repo.created_at}</Moment></p>
+                          <a href={userInfo.html_url}>@{userInfo.login}</a>
+                          <div className="location-joined-repo-container">
+                            <div className="location-joined-container">
+                              {
+                                !userInfo.location
+                                  ? <p><FaMapMarkerAlt /> Planet Earth</p>
+                                  : <p><FaMapMarkerAlt /> {userInfo.location}</p>
+                              }
+                              <p><FaCalendarAlt /> Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
                             </div>
+                            <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
                           </div>
-                        )
-                      })
-                    }
-                  </div>
-                </section>
-              </main>
+                          {
+                            !userInfo.blog.includes('http')
+                              ? <a href={`https:${userInfo.blog}`}>{userInfo.blog}</a>
+                              : userInfo.blog.includes('https://')
+                                ? <a href={`${userInfo.blog}`}>{userInfo.blog.slice(8)}</a>
+                                : <a href={`${userInfo.blog}`}>{userInfo.blog.slice(7)}</a>
+                          }
+                        </div>
+                        <div className="chart-container">
+                          <h3>Top Languages</h3>
+                          <canvas id="top-languages" height="350" width="410" />
+                        </div>
+                      </div>
+                    </section>
+                    <section>
+                      <h3>Repositories</h3>
+                      <div className="repo-container">
+                        {
+                          repoInfo.map((repo) => {
+                            return (
+                              <div className="repo-card" key={repo.node_id}>
+                                <a href={repo.html_url}>{repo.name}</a>
+                                <p className="description">{repo.description}</p>
+                                <div className="language-date-container">
+                                  <p>{repo.language}</p>
+                                  <p><Moment format="MMMM DD, YYYY">{repo.created_at}</Moment></p>
+                                </div>
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                    </section>
+                  </main>
             }
           </Route>
         </div>
