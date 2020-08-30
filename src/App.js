@@ -3,9 +3,8 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Chart } from 'react-chartjs-2';
 import Moment from 'react-moment';
-import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft, FaCode } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa';
 import './index.scss';
-
 
 // Components
 import LandingPage from './Components/LandingPage';
@@ -68,9 +67,17 @@ const App = () => {
         return array;
       };
 
-      let languageColors = ['#4b89d0', '#8653c4', '#cb54b6', '#cb4c4c', '#2d3b8f', '#e3d532', '#2ed296', '#8cc3d4', '#cf722e', '#89ce30'];
+
+      const languageColors = ['rgba(75, 137, 208, 0.7)', 'rgba(134, 83, 196, 0.7)', 'rgba(203, 84, 182, 0.7)', 'rgba(203, 76, 76, 0.7)', 'rgba(45, 59, 143, 0.7)', 'rgba(227, 213, 50, 0.7)', 'rgba(46, 210, 150, 0.7)', 'rgba(140, 195, 212, 0.7)', 'rgba(207, 114, 46, 0.7)', 'rgba(137, 206, 48, 0.7)'];
 
       shuffle(languageColors);
+
+      // const borderColors =
+      languageColors.map((color) => {
+        const alpha = /0.7/g
+        color = color.replace(alpha, 1);
+        console.log(color);
+      })
 
       const ctx = document.getElementById('top-languages');
       new Chart(ctx, {
@@ -81,6 +88,7 @@ const App = () => {
             {
               data: languageTotals,
               backgroundColor: languageColors,
+              borderColor: languageColors,
             },
           ],
         },
@@ -163,10 +171,7 @@ const App = () => {
                           repoInfo.map((repo) => {
                             return (
                               <div className="repo-card" key={repo.node_id}>
-                                <div className="title-button-container">
-                                  <h4>{repo.name}</h4>
-                                  <a href={repo.html_url}><FaCode /></a>
-                                </div>
+                                <a href={repo.html_url}>{repo.name}</a>
                                 <p className="description">{repo.description}</p>
                                 <div className="language-date-container">
                                   <p>{repo.language}</p>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { FaSpinner } from 'react-icons/fa';
+import { DiGithubBadge } from 'react-icons/di';
 
 const LoadingAnimation = () => {
   return (
     <div className="loading-container">
-      <FaSpinner />
+      <DiGithubBadge />
     </div>
   )
 }

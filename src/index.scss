@@ -223,27 +223,17 @@ h3 {
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 70px;
-  }
-}
-
-.title-button-container {
-  display: flex;
-  justify-content: space-between;
-  h4 {
-    font-size: 20px;
-    margin: 0;
-  }
-  a {
-    display: inline-block;
-    color: $tertiaryColor;
-    font-size: 25px;
-    border: 2px solid $secondaryColor;
-    border-radius: 5px;
-    padding: 4px;
-    transition: color .35s;
-    &:hover,
-    &:focus {
+    a {
+      display: inline-block;
       color: $secondaryColor;
+      font-size: 20px;
+      padding: 4px;
+      transition: color .35s;
+      margin-bottom: 20px;
+      &:hover,
+      &:focus {
+        color: $tertiaryColor;
+      }
     }
   }
 }
@@ -262,17 +252,23 @@ h3 {
 // LoadingAnimation.js
 .loading-container {
   font-size: 80px;
-  margin: 120px auto 200px;
+  display: flex;
+  justify-content: center;
+  margin-top: 300px;
   svg {
-    animation: spin 2s linear infinite;
+    animation: pulse 2s ease infinite;
   }
 }
 
-@keyframes spin {
+@keyframes pulse {
   0% {
-    transform: rotate(0deg)
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+    color: $tertiaryColor;
   }
   100% {
-    transform: rotate(360deg)
+    transform: scale(1);
   }
 }
