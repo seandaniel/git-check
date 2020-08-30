@@ -156,12 +156,20 @@ input {
   }
 }
 
-.location-joined-container p:first-child {
-  margin: 0 30px 10px 0;
+.location-joined-container p {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 5px;
+    color: lighten($secondaryColor, 40%);
+  }
+  time {
+    margin-left: 5px;
+  }
 }
 
-.location-joined-container svg {
-  color: lighten($secondaryColor, 40%);
+.location-joined-container p:first-child {
+  margin: 0 30px 10px 0;
 }
 
 .location-joined-repo-container {
@@ -215,16 +223,27 @@ h3 {
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 70px;
-    a {
-      display: inline-block;
-      color: $tertiaryColor;
-      font-size: 20px;
-      transition: color .35s;
-      margin-bottom: 20px;
-      &:hover,
-      &:focus {
-        color: $secondaryColor;
-      }
+  }
+}
+
+.title-button-container {
+  display: flex;
+  justify-content: space-between;
+  h4 {
+    font-size: 20px;
+    margin: 0;
+  }
+  a {
+    display: inline-block;
+    color: $tertiaryColor;
+    font-size: 25px;
+    border: 2px solid $secondaryColor;
+    border-radius: 5px;
+    padding: 4px;
+    transition: color .35s;
+    &:hover,
+    &:focus {
+      color: $secondaryColor;
     }
   }
 }

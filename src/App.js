@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Chart } from 'react-chartjs-2';
 import Moment from 'react-moment';
-import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft, FaCode } from 'react-icons/fa';
 import './index.scss';
 
 
@@ -125,11 +125,7 @@ const App = () => {
                       <div className="bio-chart-container">
                         <div className="bio-container">
                           <img src={userInfo.avatar_url} alt={userInfo.name} />
-                          {
-                            userInfo.name
-                              ? <h2>{userInfo.name}</h2>
-                              : null
-                          }
+                          <h2>{userInfo.name}</h2>
                           <a href={userInfo.html_url}>@{userInfo.login}</a>
                           <div className="location-joined-repo-container">
                             <div className="location-joined-container">
@@ -138,7 +134,7 @@ const App = () => {
                                   ? <p><FaMapMarkerAlt /> Planet Earth</p>
                                   : <p><FaMapMarkerAlt /> {userInfo.location}</p>
                               }
-                              <p><FaCalendarAlt /> Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
+                              <p><FaCalendarAlt />Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
                             </div>
                             {
                               userInfo.public_repos === 1
@@ -167,7 +163,10 @@ const App = () => {
                           repoInfo.map((repo) => {
                             return (
                               <div className="repo-card" key={repo.node_id}>
-                                <a href={repo.html_url}>{repo.name}</a>
+                                <div className="title-button-container">
+                                  <h4>{repo.name}</h4>
+                                  <a href={repo.html_url}><FaCode /></a>
+                                </div>
                                 <p className="description">{repo.description}</p>
                                 <div className="language-date-container">
                                   <p>{repo.language}</p>
