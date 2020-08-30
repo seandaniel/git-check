@@ -106,9 +106,19 @@ const App = () => {
           <Route exact path="/user">
             {
               isLoading
-                ? <LoadingAnimation />
+                ? (
+                  <div>
+                    <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
+                    <LoadingAnimation />
+                  </div>
+                )
                 : !results
-                  ? <Error />
+                  ? (
+                    <div>
+                      <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
+                      <Error />
+                    </div>
+                  )
                   : <main>
                     <section>
                       <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
@@ -118,7 +128,7 @@ const App = () => {
                           {
                             userInfo.name
                               ? <h2>{userInfo.name}</h2>
-                              : <h2>{userInfo.login}</h2>
+                              : null
                           }
                           <a href={userInfo.html_url}>@{userInfo.login}</a>
                           <div className="location-joined-repo-container">
@@ -130,7 +140,11 @@ const App = () => {
                               }
                               <p><FaCalendarAlt /> Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
                             </div>
-                            <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
+                            {
+                              userInfo.public_repos === 1
+                                ? <p className="repos"><span>{userInfo.public_repos}</span><span>Repo</span></p>
+                                : <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
+                            }
                           </div>
                           {
                             !userInfo.blog.includes('http')
