@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Chart } from 'react-chartjs-2';
-import Moment from 'react-moment';
-import { FaMapMarkerAlt, FaCalendarAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import './index.scss';
 
 // Components
@@ -110,7 +109,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <>
         <div className="wrapper">
           <Route exact path="/" component={() => <LandingPage apiCall={apiCall} />} />
@@ -181,7 +180,7 @@ const App = () => {
           </Route>
         </div>
       </>
-    </BrowserRouter >
+    </BrowserRouter>
   )
 }
 
