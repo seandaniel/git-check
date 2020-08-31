@@ -38,7 +38,7 @@ const App = () => {
       let languagesArray = [];
 
       repos.map((repo) => {
-        languagesArray.push(repo.language);
+        return languagesArray.push(repo.language);
       })
 
       const languagesObject = languagesArray.reduce((obj, repo) => {
@@ -78,7 +78,7 @@ const App = () => {
       languageColors.map((color) => {
         const alpha = /0.7/g
         color = color.replace(alpha, 1);
-        console.log(color);
+        return color;
       })
 
       const ctx = document.getElementById('top-languages');
@@ -105,6 +105,11 @@ const App = () => {
       setIsLoading(false);
       setResults(false);
     }
+  }
+
+  const handleStar = (value) => {
+    console.log(value);
+    // reference user.login and push to firebase
 
   }
 
@@ -112,7 +117,7 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <>
         <div className="wrapper">
-          <Route exact path="/" component={() => <LandingPage apiCall={apiCall} />} />
+          <Route exact path="/" component={() => <LandingPage apiCall={apiCall} handleStar={handleStar} />} />
           <Route exact path="/user">
             {
               isLoading
@@ -131,12 +136,14 @@ const App = () => {
                   )
                   : <main>
                     <section>
+                      <button onClick={handleStar}>Star</button>
                       <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
                       <div className="bio-chart-container">
                         {
                           userInfo.map((user) => {
                             return (
                               <Bio
+                                key={user.id}
                                 avatar_url={user.avatar_url}
                                 name={user.name}
                                 html_url={user.html_url}
@@ -145,7 +152,6 @@ const App = () => {
                                 created_at={user.created_at}
                                 public_repos={user.public_repos}
                                 blog={user.blog}
-
                               />
                             )
                           })
@@ -163,6 +169,7 @@ const App = () => {
                           repoInfo.map((repo) => {
                             return (
                               <RepoCards
+                                key={repo.id}
                                 node_id={repo.node_id}
                                 html_url={repo.html_url}
                                 name={repo.name}
