@@ -8,6 +8,7 @@ import './index.scss';
 
 // Components
 import LandingPage from './Components/LandingPage';
+import Bio from './Components/Bio';
 import RepoCards from './Components/RepoCards';
 import LoadingAnimation from './Components/LoadingAnimation';
 import Error from './Components/Error';
@@ -30,7 +31,7 @@ const App = () => {
       response[0] = await axios.get(`https://api.github.com/users/${value}`);
       response[1] = await axios.get(`https://api.github.com/users/${value}/repos`);
 
-      setUserInfo(response[0].data);
+      setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
 
       const repos = response[1].data;
@@ -51,6 +52,7 @@ const App = () => {
         return obj;
       }, {})
 
+      // remove languages that are not specified
       delete languagesObject.null;
 
       let languageNames = Object.keys(languagesObject);
@@ -132,33 +134,23 @@ const App = () => {
                     <section>
                       <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
                       <div className="bio-chart-container">
-                        <div className="bio-container">
-                          <img src={userInfo.avatar_url} alt={userInfo.name} />
-                          <h2>{userInfo.name}</h2>
-                          <a href={userInfo.html_url}>@{userInfo.login}</a>
-                          <div className="location-joined-repo-container">
-                            <div className="location-joined-container">
-                              {
-                                !userInfo.location
-                                  ? <p><FaMapMarkerAlt /> Planet Earth</p>
-                                  : <p><FaMapMarkerAlt /> {userInfo.location}</p>
-                              }
-                              <p><FaCalendarAlt />Joined <Moment format="MMMM DD, YYYY">{userInfo.created_at}</Moment></p>
-                            </div>
-                            {
-                              userInfo.public_repos === 1
-                                ? <p className="repos"><span>{userInfo.public_repos}</span><span>Repo</span></p>
-                                : <p className="repos"><span>{userInfo.public_repos}</span><span>Repos</span></p>
-                            }
-                          </div>
-                          {
-                            !userInfo.blog.includes('http')
-                              ? <a href={`https:${userInfo.blog}`}>{userInfo.blog}</a>
-                              : userInfo.blog.includes('https://')
-                                ? <a href={`${userInfo.blog}`}>{userInfo.blog.slice(8)}</a>
-                                : <a href={`${userInfo.blog}`}>{userInfo.blog.slice(7)}</a>
-                          }
-                        </div>
+                        {
+                          userInfo.map((user) => {
+                            return (
+                              <Bio
+                                avatar_url={user.avatar_url}
+                                name={user.name}
+                                html_url={user.html_url}
+                                login={user.login}
+                                location={user.location}
+                                created_at={user.created_at}
+                                public_repos={user.public_repos}
+                                blog={user.blog}
+
+                              />
+                            )
+                          })
+                        }
                         <div className="chart-container">
                           <h3>Top Languages</h3>
                           <canvas id="top-languages" height="350" width="410" />
