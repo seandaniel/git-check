@@ -8,6 +8,7 @@ import './index.scss';
 
 // Components
 import LandingPage from './Components/LandingPage';
+import RepoCards from './Components/RepoCards';
 import LoadingAnimation from './Components/LoadingAnimation';
 import Error from './Components/Error';
 
@@ -170,14 +171,14 @@ const App = () => {
                         {
                           repoInfo.map((repo) => {
                             return (
-                              <div className="repo-card" key={repo.node_id}>
-                                <a href={repo.html_url}>{repo.name}</a>
-                                <p className="description">{repo.description}</p>
-                                <div className="language-date-container">
-                                  <p>{repo.language}</p>
-                                  <p><Moment format="MMMM DD, YYYY">{repo.created_at}</Moment></p>
-                                </div>
-                              </div>
+                              <RepoCards
+                                node_id={repo.node_id}
+                                html_url={repo.html_url}
+                                name={repo.name}
+                                description={repo.description}
+                                language={repo.language}
+                                created_at={repo.created_at}
+                              />
                             )
                           })
                         }
