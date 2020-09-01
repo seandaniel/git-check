@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { DiGithubBadge } from 'react-icons/di';
 
 const LandingPage = (props) => {
@@ -34,6 +34,7 @@ const LandingPage = (props) => {
           onChange={handleChange}
         />
       </form>
+      <Link to="/favourites">Favourites</Link>
     </header>
   )
 }

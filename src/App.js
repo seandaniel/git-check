@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import firebase from './firebase';
@@ -20,6 +20,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState(false);
   const [favourite, setFavourite] = useState('');
+  const [favourites, setFavourites] = useState([]);
   // const [languageNames, setLanguageNames] = useState([]);
   // const [languageTotals, setLanguageTotals] = useState([]);
   // const [languageColors, setLanguageColors] = useState([])
@@ -33,6 +34,7 @@ const App = () => {
     try {
       response[0] = await axios.get(`https://api.github.com/users/${value}`);
       response[1] = await axios.get(`https://api.github.com/users/${value}/repos`);
+
 
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
@@ -111,14 +113,33 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+
+    const dbRef = firebase.database().ref();
+
+    dbRef.on('value', (response) => {
+
+      const newState = [];
+
+      const data = response.val();
+
+      for (let key in data) {
+        newState.push(data[key]);
+      }
+
+
+      setFavourites(newState);
+    });
+
+
+  }, []);
+
+
   const handleFavourite = () => {
 
     const dbRef = firebase.database().ref();
 
     dbRef.push(favourite);
-
-
-
   }
 
   return (
@@ -191,6 +212,16 @@ const App = () => {
                       </div>
                     </section>
                   </main>
+            }
+          </Route>
+          <Route exact path='/favourites'>
+            <h2>Favourites!</h2>
+            {
+              favourites.map((favourite) => {
+                return (
+                  <p>{favourite}</p>
+                )
+              })
             }
           </Route>
         </div>
