@@ -20,6 +20,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState(false);
   const [favourite, setFavourite] = useState('');
+  const [imgFavourite, setImgFavourite] = useState('');
   const [favourites, setFavourites] = useState([]);
   // const [languageNames, setLanguageNames] = useState([]);
   // const [languageTotals, setLanguageTotals] = useState([]);
@@ -27,6 +28,7 @@ const App = () => {
 
   async function apiCall(value) {
 
+    // take this value and let it sit there for the handleFavourite
     setFavourite(value);
 
     let response = [];
@@ -38,6 +40,10 @@ const App = () => {
 
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
+
+
+      setImgFavourite(response[0].data.avatar_url);
+
 
       const repos = response[1].data;
 
@@ -124,22 +130,28 @@ const App = () => {
       const data = response.val();
 
       for (let key in data) {
-        newState.push(data[key]);
-      }
+        newState.push({
+          key: key,
+          name: data[key],
+        });
 
+      }
 
       setFavourites(newState);
     });
-
 
   }, []);
 
 
   const handleFavourite = () => {
 
-    const dbRef = firebase.database().ref();
+    const user = {
+      name: favourite,
+      profilePicture: imgFavourite,
+    }
 
-    dbRef.push(favourite);
+    const dbRef = firebase.database().ref();
+    dbRef.push(user);
   }
 
   return (
@@ -219,7 +231,11 @@ const App = () => {
             {
               favourites.map((favourite) => {
                 return (
-                  <p>{favourite}</p>
+                  <div key={favourite.key} className="user-card">
+                    <img src={favourite.name.profilePicture} alt={favourite.name.name} />
+                    <h3>{favourite.name.name}</h3>
+
+                  </div>
                 )
               })
             }
