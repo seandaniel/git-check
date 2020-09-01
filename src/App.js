@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
+import firebase from './firebase';
 import { Chart } from 'react-chartjs-2';
 import { FaArrowLeft } from 'react-icons/fa';
 import './index.scss';
@@ -17,12 +18,15 @@ const App = () => {
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [results, setResults] = useState(false)
+  const [results, setResults] = useState(false);
+  const [favourite, setFavourite] = useState('');
   // const [languageNames, setLanguageNames] = useState([]);
   // const [languageTotals, setLanguageTotals] = useState([]);
   // const [languageColors, setLanguageColors] = useState([])
 
   async function apiCall(value) {
+
+    setFavourite(value);
 
     let response = [];
 
@@ -107,9 +111,13 @@ const App = () => {
     }
   }
 
-  const handleStar = (value) => {
-    console.log(value);
-    // reference user.login and push to firebase
+  const handleFavourite = () => {
+
+    const dbRef = firebase.database().ref();
+
+    dbRef.push(favourite);
+
+
 
   }
 
@@ -117,7 +125,7 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <>
         <div className="wrapper">
-          <Route exact path="/" component={() => <LandingPage apiCall={apiCall} handleStar={handleStar} />} />
+          <Route exact path="/" component={() => <LandingPage apiCall={apiCall} />} />
           <Route exact path="/user">
             {
               isLoading
@@ -136,7 +144,7 @@ const App = () => {
                   )
                   : <main>
                     <section>
-                      <button onClick={handleStar}>Star</button>
+                      <button onClick={handleFavourite}>Star</button>
                       <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
                       <div className="bio-chart-container">
                         {
