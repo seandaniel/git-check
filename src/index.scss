@@ -54,6 +54,18 @@ button {
   padding: 0;
 }
 
+.button {
+  font-size: 25px;
+  border: 3px solid $tertiaryColor;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: background-color .35s, color .35s;
+  &:hover {
+    background-color: $primaryColor;
+    color: $secondaryColor;
+  }
+}
+
 .wrapper {
   max-width: 1100px;
   width: 95%;

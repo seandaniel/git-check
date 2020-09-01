@@ -37,13 +37,10 @@ const App = () => {
       response[0] = await axios.get(`https://api.github.com/users/${value}`);
       response[1] = await axios.get(`https://api.github.com/users/${value}/repos`);
 
-
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
 
-
       setImgFavourite(response[0].data.avatar_url);
-
 
       const repos = response[1].data;
 
@@ -126,7 +123,6 @@ const App = () => {
     dbRef.on('value', (response) => {
 
       const newState = [];
-
       const data = response.val();
 
       for (let key in data) {
@@ -134,7 +130,6 @@ const App = () => {
           key: key,
           name: data[key],
         });
-
       }
 
       setFavourites(newState);
@@ -163,22 +158,30 @@ const App = () => {
             {
               isLoading
                 ? (
-                  <div>
-                    <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
+                  <>
+                    <div className="favourite-back-container">
+                      <Link to="/favourites" className="button">Favourites</Link>
+                      <Link onClick={() => setIsLoading(true)} className="back-button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                    </div>
                     <LoadingAnimation />
-                  </div>
+                  </>
                 )
                 : !results
                   ? (
-                    <div>
-                      <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
+                    <>
+                      <div className="favourite-back-container">
+                        <Link to="/favourites" className="button">Favourites</Link>
+                        <Link onClick={() => setIsLoading(true)} className="back-button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                      </div>
                       <Error />
-                    </div>
+                    </>
                   )
                   : <main>
                     <section>
-                      <button onClick={handleFavourite}>Star</button>
-                      <Link onClick={() => setIsLoading(true)} className="back-button" to="/"><FaArrowLeft />Search again</Link>
+                      <div className="favourite-back-container">
+                        <button className="button" onClick={handleFavourite}>Star</button>
+                        <Link onClick={() => setIsLoading(true)} className="back-button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                      </div>
                       <div className="bio-chart-container">
                         {
                           userInfo.map((user) => {
@@ -227,14 +230,12 @@ const App = () => {
             }
           </Route>
           <Route exact path='/favourites'>
-            <h2>Favourites!</h2>
             {
               favourites.map((favourite) => {
                 return (
                   <div key={favourite.key} className="user-card">
                     <img src={favourite.name.profilePicture} alt={favourite.name.name} />
-                    <h3>{favourite.name.name}</h3>
-
+                    <button><h3>{favourite.name.name}</h3></button>
                   </div>
                 )
               })

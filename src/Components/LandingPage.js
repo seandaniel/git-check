@@ -34,7 +34,7 @@ const LandingPage = (props) => {
           onChange={handleChange}
         />
       </form>
-      <Link to="/favourites">Favourites</Link>
+      <Link to="/favourites" className="button">Favourites</Link>
     </header>
   )
 }
