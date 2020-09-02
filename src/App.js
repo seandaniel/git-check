@@ -26,6 +26,8 @@ const App = () => {
   const [imgFavorite, setImgFavorite] = useState('');
   const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
+  const [noLanguages, setNoLanguages] = useState(false);
+
 
   async function apiCall(value) {
 
@@ -69,14 +71,27 @@ const App = () => {
 
       setIsLoading(false);
       setResults(true);
+      setNoLanguages(false);
 
+      // fisher-yates shuffle
       const shuffle = (array) => {
         for (let j, x, i = array.length; i; j = parseInt(Math.random() * i),
           x = array[--i], array[i] = array[j], array[j] = x);
         return array;
       };
 
-      const languageColors = ['rgba(75, 137, 208, 0.7)', 'rgba(134, 83, 196, 0.7)', 'rgba(203, 84, 182, 0.7)', 'rgba(203, 76, 76, 0.7)', 'rgba(45, 59, 143, 0.7)', 'rgba(227, 213, 50, 0.7)', 'rgba(46, 210, 150, 0.7)', 'rgba(140, 195, 212, 0.7)', 'rgba(207, 114, 46, 0.7)', 'rgba(137, 206, 48, 0.7)'];
+      const languageColors = [
+        'rgba(75, 137, 208, 0.7)',
+        'rgba(134, 83, 196, 0.7)',
+        'rgba(203, 84, 182, 0.7)',
+        'rgba(203, 76, 76, 0.7)',
+        'rgba(45, 59, 143, 0.7)',
+        'rgba(227, 213, 50, 0.7)',
+        'rgba(46, 210, 150, 0.7)',
+        'rgba(140, 195, 212, 0.7)',
+        'rgba(207, 114, 46, 0.7)',
+        'rgba(137, 206, 48, 0.7)'
+      ];
 
       shuffle(languageColors);
 
@@ -106,6 +121,12 @@ const App = () => {
           },
         }
       });
+
+
+      if (languageNames.length === 0) {
+        setNoLanguages(true);
+      }
+
 
     } catch (err) {
       setIsLoading(false);
@@ -149,6 +170,10 @@ const App = () => {
 
   const handleFavorite = () => {
 
+    // no duplicate favorites
+
+    console.log(nameFavoritesArray.includes(favoriteUserName));
+
     if (nameFavoritesArray.includes(favoriteUserName) === false) {
       const user = {
         name: favoriteUserName,
@@ -158,7 +183,7 @@ const App = () => {
       const dbRef = firebase.database().ref();
       dbRef.push(user);
     } else {
-      console.log('Repeat')
+      return null;
     }
   }
 
@@ -224,7 +249,11 @@ const App = () => {
                         }
                         <div className="chart-container">
                           <h3>Top Languages</h3>
-                          <canvas id="top-languages" height="350" width="410" />
+                          {
+                            !noLanguages
+                              ? <canvas id="top-languages" height="350" width="410" />
+                              : <p>Nothing to see here!</p>
+                          }
                         </div>
                       </div>
                     </section>
