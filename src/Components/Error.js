@@ -1,10 +1,12 @@
 import React from 'react';
+import { FaExclamationTriangle } from 'react-icons/fa'
 
 function App() {
   return (
-    <>
-      <h1>No results</h1>
-    </>
+    <div className="error-container">
+      <FaExclamationTriangle />
+      <h1>That must not be a real GitHub user!</h1>
+    </div>
   )
 }
 

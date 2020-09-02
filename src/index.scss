@@ -17,6 +17,10 @@ $secondaryColor: #24292e;
 $tertiaryColor: #c871e8;
 $primaryFont: 'Roboto', serif;
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family: $primaryFont;
   color: $primaryColor;
@@ -335,5 +339,18 @@ h3 {
   h3 {
     font-size: 20px;
     margin-bottom: 0;
+  }
+}
+
+//Error.js
+.error-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 300px;
+  svg {
+    font-size: 100px;
+    color: $tertiaryColor;
+    margin-bottom: 20px;
   }
 }
