@@ -28,7 +28,7 @@ const App = () => {
 
   async function apiCall(value) {
 
-    // take this value and let it sit there for the handlefavorite
+    // take this value and let it sit there for the handleFavorite
     setFavoriteUserName(value);
 
     let response = [];
@@ -138,7 +138,7 @@ const App = () => {
   }, []);
 
 
-  const handlefavorite = () => {
+  const handleFavorite = () => {
 
     const user = {
       name: favoriteUserName,
@@ -182,7 +182,7 @@ const App = () => {
                   : <main>
                     <section>
                       <div className="favorite-back-container">
-                        <button className="button" onClick={handlefavorite}><FaStar /></button>
+                        <button className="button" onClick={handleFavorite}><FaStar /></button>
                         <Link onClick={() => setIsLoading(true)} to="/" className="button"><FaArrowLeft />Search again</Link>
                       </div>
                       <div className="bio-chart-container">
