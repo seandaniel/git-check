@@ -9,6 +9,7 @@ const LandingPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.apiCall(userName);
+    props.handleStar(userName);
     // props.history is identically to using a redirect, depending on a certain state in the return
     props.history.push('/user');
     setUsername('');
