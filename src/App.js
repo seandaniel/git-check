@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import firebase from './firebase';
 import { Chart } from 'react-chartjs-2';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaStar } from 'react-icons/fa';
 import './index.scss';
 
 // Components
@@ -15,21 +15,21 @@ import Error from './Components/Error';
 
 const App = () => {
 
+  // GitHub APIS
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState(false);
-  const [favourite, setFavourite] = useState('');
-  const [imgFavourite, setImgFavourite] = useState('');
-  const [favourites, setFavourites] = useState([]);
-  // const [languageNames, setLanguageNames] = useState([]);
-  // const [languageTotals, setLanguageTotals] = useState([]);
-  // const [languageColors, setLanguageColors] = useState([])
+
+  const [favoriteUserName, setFavoriteUserName] = useState('');
+  const [imgFavorite, setImgFavorite] = useState('');
+  const [totalFavorites, setTotalFavorites] = useState([]);
 
   async function apiCall(value) {
 
-    // take this value and let it sit there for the handleFavourite
-    setFavourite(value);
+    // take this value and let it sit there for the handlefavorite
+    setFavoriteUserName(value);
 
     let response = [];
 
@@ -40,7 +40,7 @@ const App = () => {
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
 
-      setImgFavourite(response[0].data.avatar_url);
+      setImgFavorite(response[0].data.avatar_url);
 
       const repos = response[1].data;
 
@@ -128,25 +128,30 @@ const App = () => {
       for (let key in data) {
         newState.push({
           key: key,
-          name: data[key],
+          userObj: data[key],
         });
       }
 
-      setFavourites(newState);
+      setTotalFavorites(newState);
     });
 
   }, []);
 
 
-  const handleFavourite = () => {
+  const handlefavorite = () => {
 
     const user = {
-      name: favourite,
-      profilePicture: imgFavourite,
+      name: favoriteUserName,
+      profilePicture: imgFavorite,
     }
 
     const dbRef = firebase.database().ref();
     dbRef.push(user);
+  }
+
+  const favouriteApiCall = (e) => {
+    const userName = e.target.innerText.slice(1);
+    apiCall(userName);
   }
 
   return (
@@ -159,28 +164,26 @@ const App = () => {
               isLoading
                 ? (
                   <>
-                    <div className="favourite-back-container">
-                      <Link to="/favourites" className="button">Favourites</Link>
-                      <Link onClick={() => setIsLoading(true)} className="back-button" to="/" className="button"><FaArrowLeft />Search again</Link>
-                    </div>
+                    <nav>
+                      <Link onClick={() => setIsLoading(true)} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                    </nav>
                     <LoadingAnimation />
                   </>
                 )
                 : !results
                   ? (
                     <>
-                      <div className="favourite-back-container">
-                        <Link to="/favourites" className="button">Favourites</Link>
-                        <Link onClick={() => setIsLoading(true)} className="back-button" to="/" className="button"><FaArrowLeft />Search again</Link>
-                      </div>
+                      <nav>
+                        <Link onClick={() => setIsLoading(true)} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                      </nav>
                       <Error />
                     </>
                   )
                   : <main>
                     <section>
-                      <div className="favourite-back-container">
-                        <button className="button" onClick={handleFavourite}>Star</button>
-                        <Link onClick={() => setIsLoading(true)} className="back-button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                      <div className="favorite-back-container">
+                        <button className="button" onClick={handlefavorite}><FaStar /></button>
+                        <Link onClick={() => setIsLoading(true)} to="/" className="button"><FaArrowLeft />Search again</Link>
                       </div>
                       <div className="bio-chart-container">
                         {
@@ -229,17 +232,22 @@ const App = () => {
                   </main>
             }
           </Route>
-          <Route exact path='/favourites'>
-            {
-              favourites.map((favourite) => {
-                return (
-                  <div key={favourite.key} className="user-card">
-                    <img src={favourite.name.profilePicture} alt={favourite.name.name} />
-                    <button><h3>{favourite.name.name}</h3></button>
-                  </div>
-                )
-              })
-            }
+          <Route exact path='/favorites'>
+            <nav>
+              <Link onClick={() => setIsLoading(true)} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+            </nav>
+            <section className="user-card-container">
+              {
+                totalFavorites.map((user) => {
+                  return (
+                    <div key={user.key} className="user-card">
+                      <img src={user.userObj.profilePicture} alt={user.userObj.name} />
+                      <Link onClick={favouriteApiCall} to="/user"><h3>@{user.userObj.name}</h3></Link>
+                    </div>
+                  )
+                })
+              }
+            </section>
           </Route>
         </div>
       </>

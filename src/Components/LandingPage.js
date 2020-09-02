@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { DiGithubBadge } from 'react-icons/di';
+import { FaStar } from 'react-icons/fa'
 
 const LandingPage = (props) => {
 
@@ -20,6 +21,9 @@ const LandingPage = (props) => {
 
   return (
     <header>
+      <nav>
+        <Link to="/favorites" className="button"><FaStar />Favorites</Link>
+      </nav>
       <div className="icon-h1-container">
         <DiGithubBadge />
         <h1>Git Check</h1>
@@ -34,7 +38,6 @@ const LandingPage = (props) => {
           onChange={handleChange}
         />
       </form>
-      <Link to="/favourites" className="button">Favourites</Link>
     </header>
   )
 }
