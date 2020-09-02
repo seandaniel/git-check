@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { DiGithubBadge } from 'react-icons/di';
+import { FaStar } from 'react-icons/fa'
 
 const LandingPage = (props) => {
 
@@ -9,7 +10,6 @@ const LandingPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.apiCall(userName);
-    props.handleStar(userName);
     // props.history is identically to using a redirect, depending on a certain state in the return
     props.history.push('/user');
     setUsername('');
@@ -21,6 +21,9 @@ const LandingPage = (props) => {
 
   return (
     <header>
+      <nav>
+        <Link to="/favorites" className="button"><FaStar />Favorites</Link>
+      </nav>
       <div className="icon-h1-container">
         <DiGithubBadge />
         <h1>Git Check</h1>
