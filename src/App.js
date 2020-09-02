@@ -24,6 +24,7 @@ const App = () => {
 
   const [favoriteUserName, setFavoriteUserName] = useState('');
   const [imgFavorite, setImgFavorite] = useState('');
+  const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
 
   async function apiCall(value) {
@@ -65,9 +66,6 @@ const App = () => {
 
       let languageNames = Object.keys(languagesObject);
       let languageTotals = Object.values(languagesObject);
-
-      // setLanguageNames(languageNames);
-      // setLanguageTotals(languageTotals);
 
       setIsLoading(false);
       setResults(true);
@@ -132,6 +130,18 @@ const App = () => {
       }
 
       setTotalFavorites(newState);
+
+      let userNameArray = [];
+
+      newState.map((userName) => {
+
+        userNameArray.push(userName.userObj.name);
+
+        setNameFavouritesArray(userNameArray);
+      })
+
+      // grab user names and put into state to be look at in handleFavorite
+
     });
 
   }, []);
@@ -139,18 +149,28 @@ const App = () => {
 
   const handleFavorite = () => {
 
-    const user = {
-      name: favoriteUserName,
-      profilePicture: imgFavorite,
-    }
+    if (nameFavoritesArray.includes(favoriteUserName) === false) {
+      const user = {
+        name: favoriteUserName,
+        profilePicture: imgFavorite,
+      }
 
-    const dbRef = firebase.database().ref();
-    dbRef.push(user);
+      const dbRef = firebase.database().ref();
+      dbRef.push(user);
+    } else {
+      console.log('Repeat')
+    }
   }
 
   const favouriteApiCall = (e) => {
     const userName = e.target.innerText.slice(1);
     apiCall(userName);
+  }
+
+  const back = () => {
+    !isLoading
+      ? setIsLoading(true)
+      : setIsLoading(false)
   }
 
   return (
@@ -164,7 +184,7 @@ const App = () => {
                 ? (
                   <>
                     <nav>
-                      <Link onClick={() => setIsLoading(true)} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                      <Link onClick={back} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
                     </nav>
                     <LoadingAnimation />
                   </>
@@ -173,7 +193,7 @@ const App = () => {
                   ? (
                     <>
                       <nav>
-                        <Link onClick={() => setIsLoading(true)} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                        <Link onClick={back} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
                       </nav>
                       <Error />
                     </>
@@ -182,7 +202,7 @@ const App = () => {
                     <section>
                       <div className="favorite-back-container">
                         <button className="button" onClick={handleFavorite}><FaStar /></button>
-                        <Link onClick={() => setIsLoading(true)} to="/" className="button"><FaArrowLeft />Search again</Link>
+                        <Link onClick={back} to="/" className="button"><FaArrowLeft />Search again</Link>
                       </div>
                       <div className="bio-chart-container">
                         {
@@ -233,7 +253,7 @@ const App = () => {
           </Route>
           <Route exact path='/favorites'>
             <nav>
-              <Link onClick={() => setIsLoading(true)} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+              <Link onClick={back} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
             </nav>
             <section className="user-card-container">
               {
