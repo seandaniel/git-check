@@ -4,6 +4,7 @@ import axios from 'axios';
 import firebase from './firebase';
 import { Chart } from 'react-chartjs-2';
 import { FaArrowLeft, FaStar } from 'react-icons/fa';
+import { DiGithubBadge } from 'react-icons/di';
 import './index.scss';
 
 // Components
@@ -22,8 +23,13 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState(false);
 
+
+  // Firebase
   const [favoriteUserName, setFavoriteUserName] = useState('');
   const [imgFavorite, setImgFavorite] = useState('');
+  const [locationFavorite, setLocationFavorite] = useState('');
+
+
   const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
   const [noLanguages, setNoLanguages] = useState(false);
@@ -44,6 +50,14 @@ const App = () => {
       setRepoInfo(response[1].data);
 
       setImgFavorite(response[0].data.avatar_url);
+
+
+      // if location is null, set it to Planet Earth
+      if (response[0].data.location !== null) {
+        setLocationFavorite(response[0].data.location);
+      } else {
+        setLocationFavorite('Planet Earth');
+      }
 
       const repos = response[1].data;
 
@@ -155,13 +169,9 @@ const App = () => {
       let userNameArray = [];
 
       newState.map((userName) => {
-
         userNameArray.push(userName.userObj.name);
-
         setNameFavouritesArray(userNameArray);
       })
-
-      // grab user names and put into state to be look at in handleFavorite
 
     });
 
@@ -171,13 +181,11 @@ const App = () => {
   const handleFavorite = () => {
 
     // no duplicate favorites
-
-    console.log(nameFavoritesArray.includes(favoriteUserName));
-
     if (nameFavoritesArray.includes(favoriteUserName) === false) {
       const user = {
-        name: favoriteUserName,
+        name: favoriteUserName.toLowerCase(),
         profilePicture: imgFavorite,
+        location: locationFavorite,
       }
 
       const dbRef = firebase.database().ref();
@@ -188,7 +196,8 @@ const App = () => {
   }
 
   const favouriteApiCall = (e) => {
-    const userName = e.target.innerText.slice(1);
+    // target the closest child (h3), grab the text content and remove the first character (@)
+    const userName = e.target.closest('.user-card').firstChild.textContent.slice(1);
     apiCall(userName);
   }
 
@@ -289,8 +298,14 @@ const App = () => {
                 totalFavorites.map((user) => {
                   return (
                     <div key={user.key} className="user-card">
-                      <img src={user.userObj.profilePicture} alt={user.userObj.name} />
-                      <Link onClick={favouriteApiCall} to="/user"><h3>@{user.userObj.name}</h3></Link>
+                      <div className="img-h3-container">
+                        <img src={user.userObj.profilePicture} alt={user.userObj.name} />
+                        <h3>@{user.userObj.name}</h3>
+                      </div>
+                      <div className="date-link-container">
+                        <p>{user.userObj.location}</p>
+                        <Link onClick={favouriteApiCall} to="/user"><DiGithubBadge /></Link>
+                      </div>
                     </div>
                   )
                 })
