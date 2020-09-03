@@ -35,18 +35,22 @@ const App = () => {
   const [totalFavorites, setTotalFavorites] = useState([]);
   const [noLanguages, setNoLanguages] = useState(false);
 
+  const [buttonDisable, setButtonDisabled] = useState(false);
 
   async function apiCall(value) {
 
     let response = [];
 
     try {
+
       response[0] = await axios.get(`https://api.github.com/users/${value}`);
       response[1] = await axios.get(`https://api.github.com/users/${value}/repos`);
 
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
 
+      // Firebase
+      setFavoriteUserName(value);
       setImgFavorite(response[0].data.avatar_url);
 
       // if location is null, set it to Planet Earth
@@ -83,7 +87,7 @@ const App = () => {
       setIsLoading(false);
       setResults(true);
       setNoLanguages(false);
-      setFavoriteUserName(value);
+      setButtonDisabled(false);
 
       // fisher-yates shuffle
       const shuffle = (array) => {
@@ -139,6 +143,10 @@ const App = () => {
         setNoLanguages(true);
       }
 
+      if (nameFavoritesArray.includes(value)) {
+        setButtonDisabled(true);
+      }
+
 
     } catch (err) {
       setIsLoading(false);
@@ -174,6 +182,8 @@ const App = () => {
         return setNameFavouritesArray(userNameArray);
 
       })
+
+
 
     });
 
@@ -240,7 +250,11 @@ const App = () => {
                   : <main>
                     <section>
                       <ul className="favorite-back-container">
-                        <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                        {
+                          !buttonDisable
+                            ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                            : <li><button className="button disabled" disable="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                        }
                         <li><Link onClick={back} to="/" className="button"><FaArrowLeft />Search again</Link></li>
                       </ul>
                       <div className="bio-chart-container">

@@ -60,6 +60,14 @@ button {
   padding: 0;
 }
 
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 40px 0;
+  width: 100%;
+}
+
 .button {
   color: $primaryColor;
   display: flex;
@@ -79,13 +87,12 @@ button {
   }
 }
 
-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin: 40px 0;
-  width: 100%;
+.disabled {
+  cursor: auto;
+  background: $primaryColor;
+  color: $secondaryColor;
 }
+
 
 .wrapper {
   max-width: 1100px;
