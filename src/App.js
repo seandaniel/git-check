@@ -23,8 +23,8 @@ const App = () => {
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [results, setResults] = useState(false);
+  const [isLoading, toggleIsLoading] = useState(true);
+  const [results, toggleResults] = useState(false);
 
   // Firebase
   const [favoriteUserName, setFavoriteUserName] = useState('');
@@ -33,15 +33,20 @@ const App = () => {
 
   const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
-  const [noLanguages, setNoLanguages] = useState(false);
+  const [noLanguages, toggleNoLanguages] = useState(false);
 
-  const [buttonDisable, setButtonDisabled] = useState(false);
+  const [buttonDisable, toggleButtonDisabled] = useState(false);
 
   async function apiCall(value) {
 
     let response = [];
 
     try {
+
+
+      if (!isLoading) {
+        toggleIsLoading(true);
+      }
 
       response[0] = await axios.get(`https://api.github.com/users/${value}`);
       response[1] = await axios.get(`https://api.github.com/users/${value}/repos`);
@@ -84,10 +89,10 @@ const App = () => {
       let languageNames = Object.keys(languagesObject);
       let languageTotals = Object.values(languagesObject);
 
-      setIsLoading(false);
-      setResults(true);
-      setNoLanguages(false);
-      setButtonDisabled(false);
+      toggleIsLoading(false);
+      toggleResults(true);
+      toggleNoLanguages(false);
+      toggleButtonDisabled(false);
 
       // fisher-yates shuffle
       const shuffle = (array) => {
@@ -140,17 +145,18 @@ const App = () => {
 
       // if there is no languages, don't show chart
       if (languageNames.length === 0) {
-        setNoLanguages(true);
+        toggleNoLanguages(true);
       }
 
+      // if the user is already favorited, disable the button
       if (nameFavoritesArray.includes(value)) {
-        setButtonDisabled(true);
+        toggleButtonDisabled(true);
       }
 
 
     } catch (err) {
-      setIsLoading(false);
-      setResults(false);
+      toggleIsLoading(false);
+      toggleResults(false);
     }
   }
 
@@ -183,8 +189,6 @@ const App = () => {
 
       })
 
-
-
     });
 
   }, []);
@@ -192,21 +196,15 @@ const App = () => {
 
   const handleFavorite = () => {
 
-    // checking for duplicate favorites
-    if (nameFavoritesArray.includes(favoriteUserName) === false) {
-
-      const user = {
-        name: favoriteUserName.toLowerCase(),
-        profilePicture: imgFavorite,
-        location: locationFavorite,
-      }
-
-      const dbRef = firebase.database().ref();
-      dbRef.push(user);
-
-    } else {
-      return null;
+    const user = {
+      name: favoriteUserName.toLowerCase(),
+      profilePicture: imgFavorite,
+      location: locationFavorite,
     }
+
+    const dbRef = firebase.database().ref();
+    dbRef.push(user);
+
   }
 
   const favouriteApiCall = (e) => {
@@ -218,8 +216,8 @@ const App = () => {
 
   const back = () => {
     !isLoading
-      ? setIsLoading(true)
-      : setIsLoading(false)
+      ? toggleIsLoading(true)
+      : toggleIsLoading(false)
   }
 
   return (
