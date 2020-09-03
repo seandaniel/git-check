@@ -3,11 +3,14 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import firebase from './firebase';
 import { Chart } from 'react-chartjs-2';
+
+// icons
 import { FaArrowLeft, FaStar } from 'react-icons/fa';
 import { DiGithubBadge } from 'react-icons/di';
+
 import './index.scss';
 
-// Components
+// components
 import LandingPage from './Components/LandingPage';
 import Bio from './Components/Bio';
 import RepoCards from './Components/RepoCards';
@@ -23,12 +26,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState(false);
 
-
   // Firebase
   const [favoriteUserName, setFavoriteUserName] = useState('');
   const [imgFavorite, setImgFavorite] = useState('');
   const [locationFavorite, setLocationFavorite] = useState('');
-
 
   const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
@@ -36,9 +37,6 @@ const App = () => {
 
 
   async function apiCall(value) {
-
-    // take this value and let it sit there for the handleFavorite
-    setFavoriteUserName(value);
 
     let response = [];
 
@@ -50,7 +48,6 @@ const App = () => {
       setRepoInfo(response[1].data);
 
       setImgFavorite(response[0].data.avatar_url);
-
 
       // if location is null, set it to Planet Earth
       if (response[0].data.location !== null) {
@@ -86,6 +83,7 @@ const App = () => {
       setIsLoading(false);
       setResults(true);
       setNoLanguages(false);
+      setFavoriteUserName(value);
 
       // fisher-yates shuffle
       const shuffle = (array) => {
@@ -109,7 +107,7 @@ const App = () => {
 
       shuffle(languageColors);
 
-      // const borderColors =
+      // add .3 opacity to each languageColor for their individual border
       languageColors.map((color) => {
         const alpha = /0.7/g
         color = color.replace(alpha, 1);
@@ -136,7 +134,7 @@ const App = () => {
         }
       });
 
-
+      // if there is no languages, don't show chart
       if (languageNames.length === 0) {
         setNoLanguages(true);
       }
@@ -157,6 +155,7 @@ const App = () => {
       const newState = [];
       const data = response.val();
 
+      // pushing the key for the index and userObj for user information into the newState array
       for (let key in data) {
         newState.push({
           key: key,
@@ -168,9 +167,12 @@ const App = () => {
 
       let userNameArray = [];
 
+      // pushing all favourite usernames into an array
       newState.map((userName) => {
+
         userNameArray.push(userName.userObj.name);
         setNameFavouritesArray(userNameArray);
+
       })
 
     });
@@ -180,8 +182,9 @@ const App = () => {
 
   const handleFavorite = () => {
 
-    // no duplicate favorites
+    // checking for duplicate favorites
     if (nameFavoritesArray.includes(favoriteUserName) === false) {
+
       const user = {
         name: favoriteUserName.toLowerCase(),
         profilePicture: imgFavorite,
@@ -190,6 +193,7 @@ const App = () => {
 
       const dbRef = firebase.database().ref();
       dbRef.push(user);
+
     } else {
       return null;
     }
@@ -198,6 +202,7 @@ const App = () => {
   const favouriteApiCall = (e) => {
     // target the closest child (h3), grab the text content and remove the first character (@)
     const userName = e.target.closest('.user-card').firstChild.textContent.slice(1);
+    // making another api call instead of storing all favourite user info into firebase when you favourite to show most up-to-date GitHub stats
     apiCall(userName);
   }
 
@@ -234,10 +239,10 @@ const App = () => {
                   )
                   : <main>
                     <section>
-                      <div className="favorite-back-container">
-                        <button className="button" onClick={handleFavorite}><FaStar /></button>
-                        <Link onClick={back} to="/" className="button"><FaArrowLeft />Search again</Link>
-                      </div>
+                      <ul className="favorite-back-container">
+                        <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                        <li><Link onClick={back} to="/" className="button"><FaArrowLeft />Search again</Link></li>
+                      </ul>
                       <div className="bio-chart-container">
                         {
                           userInfo.map((user) => {
@@ -298,14 +303,14 @@ const App = () => {
                 totalFavorites.map((user) => {
                   return (
                     <div key={user.key} className="user-card">
-                      <div className="img-h3-container">
-                        <img src={user.userObj.profilePicture} alt={user.userObj.name} />
-                        <h3>@{user.userObj.name}</h3>
-                      </div>
-                      <div className="date-link-container">
-                        <p>{user.userObj.location}</p>
-                        <Link onClick={favouriteApiCall} to="/user"><DiGithubBadge /></Link>
-                      </div>
+                      <ul className="img-h4-container">
+                        <li><img src={user.userObj.profilePicture} alt={user.userObj.name} /></li>
+                        <li><h4>@{user.userObj.name}</h4></li>
+                      </ul>
+                      <ul className="date-link-container">
+                        <li><p>{user.userObj.location}</p></li>
+                        <li><Link onClick={favouriteApiCall} to="/user" aria-label="View user stats" title="View user stats"><DiGithubBadge /></Link></li>
+                      </ul>
                     </div>
                   )
                 })

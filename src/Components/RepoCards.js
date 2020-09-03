@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 const RepoCards = ({ node_id, html_url, name, description, language, created_at }) => {
   return (
     <div className="repo-card" key={node_id}>
-      <a href={html_url}>{name}</a>
+      <h4><a title="View repository" href={html_url}>{name}</a></h4>
       <p className="description">{description}</p>
       <div className="language-date-container">
         <p>{language}</p>

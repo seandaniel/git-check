@@ -17,6 +17,8 @@ $secondaryColor: #24292e;
 $tertiaryColor: #c871e8;
 $primaryFont: 'Roboto', serif;
 
+
+// global 
 html {
   overflow-y: scroll;
 }
@@ -27,7 +29,7 @@ body {
   background: $secondaryColor;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin: 0;
   font-weight: 400;
 }
@@ -138,6 +140,7 @@ input {
   margin: 40px 0;
   button {
     margin-right: 10px;
+    height: 100%;
     svg {
       margin-right: 0;
     }
@@ -219,11 +222,18 @@ input {
   padding: 20px 20px 0;
   background: $primaryColor;
   border-radius: 5px;
+  min-height: 416px;
+  min-width: 450px;
   h3 {
     text-align: center;
     margin-bottom: 0;
     color: $secondaryColor;
-
+  }
+  p {
+    color: $secondaryColor;
+    font-size: 20px;
+    margin-top: 125px;
+    text-align: center;
   }
 }
 
@@ -303,12 +313,25 @@ h3 {
   }
 }
 
+//Error.js
+.error-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 300px;
+  svg {
+    font-size: 100px;
+    color: $tertiaryColor;
+    margin-bottom: 20px;
+  }
+}
+
 //Favorites.js
 .user-card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 200px;
+  margin-top: 100px;
   .user-card {
     display: flex;
     flex-direction: column;
@@ -321,7 +344,7 @@ h3 {
   }
 }
 
-.img-h3-container {
+.img-h4-container {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -332,7 +355,7 @@ h3 {
     height: 100px;
     width: 100px;
   }
-  h3 {
+  h4 {
     color: $secondaryColor;
     font-size: 20px;
     margin-bottom: 0;
@@ -354,18 +377,5 @@ h3 {
     &:focus {
       color: $tertiaryColor;
     }
-  }
-}
-
-//Error.js
-.error-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 300px;
-  svg {
-    font-size: 100px;
-    color: $tertiaryColor;
-    margin-bottom: 20px;
   }
 }

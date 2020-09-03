@@ -1,5 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
+
+// icons
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
 const Bio = ({ avatar_url, name, html_url, login, location, created_at, public_repos, blog }) => {
@@ -7,7 +9,7 @@ const Bio = ({ avatar_url, name, html_url, login, location, created_at, public_r
     <div className="bio-container">
       <img src={avatar_url} alt={name} />
       <h2>{name}</h2>
-      <a href={html_url}>@{login}</a>
+      <a title="View GitHub profile" href={html_url}>@{login}</a>
       <div className="location-joined-repo-container">
         <div className="location-joined-container">
           {
@@ -25,10 +27,10 @@ const Bio = ({ avatar_url, name, html_url, login, location, created_at, public_r
       </div>
       {
         !blog.includes('http')
-          ? <a href={`https:${blog}`}>{blog}</a>
+          ? <a href={`https:${blog}`} title="View personal website">{blog}</a>
           : blog.includes('https://')
-            ? <a href={`${blog}`}>{blog.slice(8)}</a>
-            : <a href={`${blog}`}>{blog.slice(7)}</a>
+            ? <a href={`${blog}`} title="View personal website">{blog.slice(8)}</a>
+            : <a href={`${blog}`} title="View personal website">{blog.slice(7)}</a>
       }
     </div>
   )

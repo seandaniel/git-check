@@ -1,13 +1,15 @@
 import React from 'react';
+
+// icons
 import { FaExclamationTriangle } from 'react-icons/fa'
 
-function App() {
+const Error = () => {
   return (
     <div className="error-container">
       <FaExclamationTriangle />
-      <h1>That must not be a real GitHub user!</h1>
+      <h3>That must not be a real GitHub user!</h3>
     </div>
   )
 }
 
-export default App;
+export default Error;

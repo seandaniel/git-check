@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+
+// icons
 import { DiGithubBadge } from 'react-icons/di';
 import { FaStar } from 'react-icons/fa'
 
@@ -34,7 +36,8 @@ const LandingPage = (props) => {
           name="username"
           type="text"
           value={userName}
-          placeholder='Enter GitHub username'
+          placeholder="Enter GitHub username"
+          aria-label="Enter GitHub username"
           onChange={handleChange}
         />
       </form>
