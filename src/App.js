@@ -120,8 +120,8 @@ const App = () => {
         'rgba(250, 193, 124, 0.7)',
         'rgba(76, 160, 77, 0.7)',
         'rgba(255, 151, 151, 0.7)',
-        'rgba(255, 151, 151, 0.7)',
-        'rgba(202, 204, 86, 0.7)'
+        'rgba(166, 31, 31, 0.7)',
+        'rgba(8, 14, 90, 0.7)',
       ];
 
       shuffle(languageColors);
@@ -256,7 +256,7 @@ const App = () => {
                           {
                             !buttonDisable
                               ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
-                              : <li><button className="button disabled" disable="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                              : <li><button className="button disabled" disabled="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
                           }
                           <li><Link to="/" className="button"><FaArrowLeft />Search</Link></li>
                         </ul>
