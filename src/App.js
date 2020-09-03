@@ -171,7 +171,7 @@ const App = () => {
       newState.map((userName) => {
 
         userNameArray.push(userName.userObj.name);
-        setNameFavouritesArray(userNameArray);
+        return setNameFavouritesArray(userNameArray);
 
       })
 
