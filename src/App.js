@@ -163,7 +163,6 @@ const App = () => {
         toggleButtonDisabled(true);
       }
 
-
     } catch (err) {
       toggleIsLoading(false);
       toggleResults(false);
@@ -206,14 +205,21 @@ const App = () => {
 
   const handleFavorite = () => {
 
-    const user = {
-      name: favorites.userName.toLowerCase(),
-      profilePicture: favorites.img,
-      location: favorites.location,
-    }
+    // no duplicate favorites
+    if (nameFavoritesArray.includes(favorites.userName) === false) {
 
-    const dbRef = firebase.database().ref();
-    dbRef.push(user);
+      const user = {
+        name: favorites.userName.toLowerCase(),
+        profilePicture: favorites.img,
+        location: favorites.location,
+      }
+
+      const dbRef = firebase.database().ref();
+      dbRef.push(user);
+
+    } else {
+      return null;
+    }
 
   }
 
