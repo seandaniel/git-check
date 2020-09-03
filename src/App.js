@@ -27,9 +27,11 @@ const App = () => {
   const [results, toggleResults] = useState(false);
 
   // Firebase
-  const [favoriteUserName, setFavoriteUserName] = useState('');
-  const [imgFavorite, setImgFavorite] = useState('');
-  const [locationFavorite, setLocationFavorite] = useState('');
+  const [favorites, setFavorites] = useState({
+    userName: '',
+    img: '',
+    location: '',
+  })
 
   const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
@@ -43,7 +45,6 @@ const App = () => {
 
     try {
 
-
       if (!isLoading) {
         toggleIsLoading(true);
       }
@@ -54,15 +55,19 @@ const App = () => {
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
 
-      // Firebase
-      setFavoriteUserName(value);
-      setImgFavorite(response[0].data.avatar_url);
-
       // if location is null, set it to Planet Earth
       if (response[0].data.location !== null) {
-        setLocationFavorite(response[0].data.location);
+        setFavorites({
+          userName: value,
+          img: response[0].data.avatar_url,
+          location: response[0].data.location,
+        })
       } else {
-        setLocationFavorite('Planet Earth');
+        setFavorites({
+          userName: value,
+          img: response[0].data.avatar_url,
+          location: 'Planet Earth',
+        })
       }
 
       const repos = response[1].data;
@@ -197,9 +202,9 @@ const App = () => {
   const handleFavorite = () => {
 
     const user = {
-      name: favoriteUserName.toLowerCase(),
-      profilePicture: imgFavorite,
-      location: locationFavorite,
+      name: favorites.userName.toLowerCase(),
+      profilePicture: favorites.img,
+      location: favorites.location,
     }
 
     const dbRef = firebase.database().ref();
@@ -214,12 +219,6 @@ const App = () => {
     apiCall(userName);
   }
 
-  const back = () => {
-    !isLoading
-      ? toggleIsLoading(true)
-      : toggleIsLoading(false)
-  }
-
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <>
@@ -231,7 +230,7 @@ const App = () => {
                 ? (
                   <>
                     <nav>
-                      <Link onClick={back} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                      <Link to="/" className="button"><FaArrowLeft />Search again</Link>
                     </nav>
                     <LoadingAnimation />
                   </>
@@ -240,7 +239,7 @@ const App = () => {
                   ? (
                     <>
                       <nav>
-                        <Link onClick={back} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+                        <Link to="/" className="button"><FaArrowLeft />Search again</Link>
                       </nav>
                       <Error />
                     </>
@@ -253,7 +252,7 @@ const App = () => {
                             ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
                             : <li><button className="button disabled" disable="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
                         }
-                        <li><Link onClick={back} to="/" className="button"><FaArrowLeft />Search again</Link></li>
+                        <li><Link to="/" className="button"><FaArrowLeft />Search again</Link></li>
                       </ul>
                       <div className="bio-chart-container">
                         {
@@ -308,7 +307,7 @@ const App = () => {
           </Route>
           <Route exact path='/favorites'>
             <nav>
-              <Link onClick={back} className="button" to="/" className="button"><FaArrowLeft />Search again</Link>
+              <Link to="/" className="button"><FaArrowLeft />Search again</Link>
             </nav>
             <section className="user-card-container">
               {
