@@ -5,7 +5,7 @@ import firebase from './firebase';
 import { Chart } from 'react-chartjs-2';
 
 // icons
-import { FaArrowLeft, FaStar } from 'react-icons/fa';
+import { FaArrowLeft, FaStar, FaSadTear } from 'react-icons/fa';
 import { DiGithubBadge } from 'react-icons/di';
 
 import './index.scss';
@@ -230,7 +230,7 @@ const App = () => {
                 ? (
                   <>
                     <nav>
-                      <Link to="/" className="button"><FaArrowLeft />Search again</Link>
+                      <Link to="/" className="button"><FaArrowLeft />Search</Link>
                     </nav>
                     <LoadingAnimation />
                   </>
@@ -239,21 +239,23 @@ const App = () => {
                   ? (
                     <>
                       <nav>
-                        <Link to="/" className="button"><FaArrowLeft />Search again</Link>
+                        <Link to="/" className="button"><FaArrowLeft />Search</Link>
                       </nav>
                       <Error />
                     </>
                   )
                   : <main>
                     <section>
-                      <ul className="favorite-back-container">
-                        {
-                          !buttonDisable
-                            ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
-                            : <li><button className="button disabled" disable="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
-                        }
-                        <li><Link to="/" className="button"><FaArrowLeft />Search again</Link></li>
-                      </ul>
+                      <nav>
+                        <ul className="favorite-back-container">
+                          {
+                            !buttonDisable
+                              ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                              : <li><button className="button disabled" disable="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                          }
+                          <li><Link to="/" className="button"><FaArrowLeft />Search</Link></li>
+                        </ul>
+                      </nav>
                       <div className="bio-chart-container">
                         {
                           userInfo.map((user) => {
@@ -277,7 +279,10 @@ const App = () => {
                           {
                             !noLanguages
                               ? <canvas id="top-languages" height="350" width="410" />
-                              : <p>Nothing to see here!</p>
+                              : <div className="icon-p-container">
+                                <FaSadTear />
+                                <p>Nothing to see here!</p>
+                              </div>
                           }
                         </div>
                       </div>
@@ -307,7 +312,7 @@ const App = () => {
           </Route>
           <Route exact path='/favorites'>
             <nav>
-              <Link to="/" className="button"><FaArrowLeft />Search again</Link>
+              <Link to="/" className="button"><FaArrowLeft />Search</Link>
             </nav>
             <section className="user-card-container">
               {

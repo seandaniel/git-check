@@ -17,7 +17,6 @@ $secondaryColor: #24292e;
 $tertiaryColor: #c871e8;
 $primaryFont: 'Roboto', serif;
 
-
 // global 
 html {
   overflow-y: scroll;
@@ -64,7 +63,7 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: 40px 0;
+  margin: 50px 0 100px;
   width: 100%;
 }
 
@@ -110,7 +109,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 180px 0 250px 0;
+  margin: 100px 0 200px 0;
 }
 
 .icon-h1-container {
@@ -149,7 +148,6 @@ input {
 .favorite-back-container {
   display: flex;
   justify-content: flex-end;
-  margin: 40px 0;
   button {
     margin-right: 10px;
     height: 100%;
@@ -163,7 +161,13 @@ input {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 100px 0;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 980px) {
+  .bio-chart-container {
+    flex-direction: column;
+  }
 }
 
 .bio-container {
@@ -183,6 +187,13 @@ input {
     text-align: center;
   }
 }
+
+@media (max-width: 980px) {
+  .bio-container {
+    margin-bottom: 100px;
+  }
+}
+
 
 .bio-container a {
   color: $tertiaryColor;
@@ -231,33 +242,61 @@ input {
   }
 }
 
+@media (max-width: 480px) {
+  .location-joined-repo-container {
+    width: 300px;
+  }
+}
+
 .chart-container {
+  position: relative;
   padding: 20px 20px 0;
   background: $primaryColor;
   border-radius: 5px;
-  min-height: 416px;
-  min-width: 450px;
+  height: 416px;
+  width: 450px;
   h3 {
     text-align: center;
     margin-bottom: 0;
     color: $secondaryColor;
   }
+}
+
+.icon-p-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+  svg {
+    font-size: 100px;
+    color: $tertiaryColor;
+    margin-bottom: 20px;
+  }
   p {
     color: $secondaryColor;
     font-size: 20px;
-    margin-top: 125px;
     text-align: center;
+  }
+}
+
+
+@media (max-width: 470px) {
+  .chart-container {
+    height: auto;
+    width: 100%;
+    p {
+      margin-bottom: 120px;
+    }
   }
 }
 
 h3 {
   font-size: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .repo-container {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   .repo-card {
     display: flex;
@@ -265,10 +304,11 @@ h3 {
     justify-content: space-between;
     background-color: $primaryColor;
     color: $secondaryColor;
-    width: 320px;
+    width: 330px;
+    margin-right: 55px;
     border-radius: 5px;
     padding: 20px;
-    margin-bottom: 70px;
+    margin-bottom: 55px;
     a {
       display: inline-block;
       color: $secondaryColor;
@@ -280,6 +320,46 @@ h3 {
       &:focus {
         color: $tertiaryColor;
       }
+    }
+  }
+}
+
+.repo-container .repo-card:nth-child(3n) {
+  margin-right: 0;
+}
+
+@media (max-width: 1180px) {
+  .repo-container {
+    margin: 0 auto;
+    // repo-card + repo-card + repo-card margin-right
+    width: calc(330px + 330px + 55px);
+    .repo-card:nth-child(3n) {
+      margin-right: 55px;
+    }
+    .repo-card:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .repo-container {
+    width: 330px;
+    .repo-card {
+      margin-right: 0;
+    }
+
+    .repo-card:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .repo-container {
+    width: 300px;
+    .repo-card {
+      width: 300px;
     }
   }
 }
@@ -343,7 +423,6 @@ h3 {
 .user-card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   margin-top: 100px;
   .user-card {
     display: flex;
@@ -352,8 +431,49 @@ h3 {
     background: $primaryColor;
     border-radius: 5px;
     padding: 20px;
-    width: 320px;
-    margin-bottom: 70px;
+    width: 330px;
+    margin-right: 55px;
+    margin-bottom: 55px;
+  }
+}
+
+.user-card-container .user-card:nth-child(3n) {
+  margin-right: 0;
+}
+
+@media (max-width: 1180px) {
+  .user-card-container {
+    margin: 0 auto;
+    // repo-card + repo-card + repo-card margin-right
+    width: calc(330px + 330px + 55px);
+    .user-card:nth-child(3n) {
+      margin-right: 55px;
+    }
+    .user-card:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .user-card-container {
+    width: 330px;
+    .user-card {
+      margin-right: 0;
+    }
+
+    .user-card:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .user-card-container {
+    width: 300px;
+    .user-card {
+      width: 300px;
+    }
   }
 }
 
