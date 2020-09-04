@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { DiGithubBadge } from 'react-icons/di';
 import { FaStar } from 'react-icons/fa'
 
-//Components
+// Components
 import Footer from './Footer';
 
 const LandingPage = (props) => {
