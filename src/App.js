@@ -58,13 +58,13 @@ const App = () => {
       // if location is null, set it to Planet Earth
       if (response[0].data.location !== null) {
         setFavorites({
-          userName: value,
+          userName: value.toLowerCase(),
           img: response[0].data.avatar_url,
           location: response[0].data.location,
         })
       } else {
         setFavorites({
-          userName: value,
+          userName: value.toLowerCase(),
           img: response[0].data.avatar_url,
           location: 'Planet Earth',
         })
@@ -159,7 +159,7 @@ const App = () => {
       }
 
       // if the user is already favorited, disable the button
-      if (nameFavoritesArray.includes(value)) {
+      if (nameFavoritesArray.includes(value.toLowerCase())) {
         toggleButtonDisabled(true);
       }
 
