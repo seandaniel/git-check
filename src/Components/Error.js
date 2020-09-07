@@ -1,6 +1,4 @@
 import React from 'react';
-
-// icons
 import { FaExclamationTriangle } from 'react-icons/fa'
 
 const Error = () => {

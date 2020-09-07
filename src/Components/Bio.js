@@ -1,7 +1,5 @@
 import React from 'react';
 import Moment from 'react-moment';
-
-// icons
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
 const Bio = ({ avatar_url, name, html_url, login, location, created_at, public_repos, blog }) => {

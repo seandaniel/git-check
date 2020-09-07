@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import axios from 'axios';
 import firebase from './firebase';
+import axios from 'axios';
 import { Chart } from 'react-chartjs-2';
 
 // icons
 import { FaArrowLeft, FaStar, FaSadTear } from 'react-icons/fa';
 import { DiGithubBadge } from 'react-icons/di';
-
-import './index.scss';
 
 // components
 import LandingPage from './Components/LandingPage';
@@ -33,7 +31,7 @@ const App = () => {
     location: '',
   })
 
-  const [nameFavoritesArray, setNameFavouritesArray] = useState([]);
+  const [nameFavoritesArray, setNameFavoritesArray] = useState([]);
   const [totalFavorites, setTotalFavorites] = useState([]);
   const [noLanguages, toggleNoLanguages] = useState(false);
 
@@ -190,11 +188,11 @@ const App = () => {
 
       let userNameArray = [];
 
-      // pushing all favourite usernames into an array
+      // pushing all favorite usernames into an array
       newState.map((userName) => {
 
         userNameArray.push(userName.userObj.name);
-        return setNameFavouritesArray(userNameArray);
+        return setNameFavoritesArray(userNameArray);
 
       })
 
@@ -223,10 +221,10 @@ const App = () => {
 
   }
 
-  const favouriteApiCall = (e) => {
+  const favoriteApiCall = (e) => {
     // target the closest child (h3), grab the text content and remove the first character (@)
     const userName = e.target.closest('.user-card').firstChild.textContent.slice(1);
-    // making another api call instead of storing all favourite user info into firebase when you favourite to show most up-to-date GitHub stats
+    // second api call instead of storing all favorite user info into firebase, this way, you will get up-to-date stats
     apiCall(userName);
   }
 
@@ -336,7 +334,7 @@ const App = () => {
                       </ul>
                       <ul className="date-link-container">
                         <li><p>{user.userObj.location}</p></li>
-                        <li><Link onClick={favouriteApiCall} to="/user" aria-label="View user stats" title="View user stats"><DiGithubBadge /></Link></li>
+                        <li><Link onClick={favoriteApiCall} to="/user" aria-label="View user stats" title="View user stats"><DiGithubBadge /></Link></li>
                       </ul>
                     </div>
                   )

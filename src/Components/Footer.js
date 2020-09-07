@@ -1,6 +1,4 @@
 import React from 'react';
-
-// icons
 import { FaCode } from 'react-icons/fa';
 
 const Footer = () => {
