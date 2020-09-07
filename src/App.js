@@ -258,6 +258,7 @@ const App = () => {
                       <nav>
                         <ul className="favorite-back-container">
                           {
+                            // if user is already a favorite
                             !buttonDisable
                               ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
                               : <li><button className="button disabled" disabled={true} onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
