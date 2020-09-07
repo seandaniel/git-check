@@ -29,7 +29,7 @@ const Bio = ({ user_id, avatar_url, name, html_url, login, location, created_at,
         // if blog doesn't have http, add https to href
         // remove https and http from <a> text
         !blog.includes('http')
-          ? <a href={`https:${blog}`} target="_blank" rel="noopener noreferrer" title="View personal website">{blog}</a>
+          ? <a href={`https://${blog}`} target="_blank" rel="noopener noreferrer" title="View personal website">{blog}</a>
           : blog.includes('https://')
             ? <a href={`${blog}`} target="_blank" rel="noopener noreferrer" title="View personal website">{blog.slice(8)}</a>
             : <a href={`${blog}`} target="_blank" rel="noopener noreferrer" title="View personal website">{blog.slice(7)}</a>
