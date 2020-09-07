@@ -260,7 +260,7 @@ const App = () => {
                           {
                             !buttonDisable
                               ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
-                              : <li><button className="button disabled" disabled="true" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                              : <li><button className="button disabled" disabled={true} onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
                           }
                           <li><Link to="/" className="button"><FaArrowLeft />Search</Link></li>
                         </ul>
@@ -304,7 +304,6 @@ const App = () => {
                             return (
                               <RepoCards
                                 key={repo.id}
-                                node_id={repo.node_id}
                                 html_url={repo.html_url}
                                 name={repo.name}
                                 description={repo.description}
