@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/git-check/static/css/main.da41a494.chunk.css",
-    "main.js": "/git-check/static/js/main.58c73cdb.chunk.js",
-    "main.js.map": "/git-check/static/js/main.58c73cdb.chunk.js.map",
+    "main.css": "/git-check/static/css/main.e3d41b33.chunk.css",
+    "main.js": "/git-check/static/js/main.abac3fef.chunk.js",
+    "main.js.map": "/git-check/static/js/main.abac3fef.chunk.js.map",
     "runtime-main.js": "/git-check/static/js/runtime-main.4d40dc82.js",
     "runtime-main.js.map": "/git-check/static/js/runtime-main.4d40dc82.js.map",
     "static/js/2.bd812277.chunk.js": "/git-check/static/js/2.bd812277.chunk.js",
     "static/js/2.bd812277.chunk.js.map": "/git-check/static/js/2.bd812277.chunk.js.map",
     "index.html": "/git-check/index.html",
-    "precache-manifest.5dded823e3c7c0009397ebe54b28ed92.js": "/git-check/precache-manifest.5dded823e3c7c0009397ebe54b28ed92.js",
+    "precache-manifest.47b71e8f8e0f31273cde2ea963adfdbd.js": "/git-check/precache-manifest.47b71e8f8e0f31273cde2ea963adfdbd.js",
     "service-worker.js": "/git-check/service-worker.js",
-    "static/css/main.da41a494.chunk.css.map": "/git-check/static/css/main.da41a494.chunk.css.map",
+    "static/css/main.e3d41b33.chunk.css.map": "/git-check/static/css/main.e3d41b33.chunk.css.map",
     "static/js/2.bd812277.chunk.js.LICENSE.txt": "/git-check/static/js/2.bd812277.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.4d40dc82.js",
     "static/js/2.bd812277.chunk.js",
-    "static/css/main.da41a494.chunk.css",
-    "static/js/main.58c73cdb.chunk.js"
+    "static/css/main.e3d41b33.chunk.css",
+    "static/js/main.abac3fef.chunk.js"
   ]
 }
