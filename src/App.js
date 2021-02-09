@@ -193,7 +193,7 @@ const App = () => {
   }, []);
 
 
-  const handleFavorite = () => {
+  const handleFavourite = () => {
 
     if (nameFavouritesArray.includes(favourites.userName) === false) {
 
@@ -212,7 +212,7 @@ const App = () => {
 
   }
 
-  const favoriteApiCall = (e) => {
+  const favouriteApiCall = (e) => {
     const userName = e.target.closest('.user-card').firstChild.textContent.slice(1);
     apiCall(userName);
   }
@@ -245,12 +245,12 @@ const App = () => {
                   : <main>
                     <section>
                       <nav>
-                        <ul className="favorite-back-container">
+                        <ul className="favourite-back-container">
                           {
-                            // if user is already a favorite
+                            // if user is already a favourite
                             !buttonDisable
-                              ? <li><button className="button" onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
-                              : <li><button className="button disabled" disabled={true} onClick={handleFavorite} aria-label="Favorite this user" title="Favorite this user"><FaStar /></button></li>
+                              ? <li><button className="button" onClick={handleFavourite} aria-label="Favourite this user" title="Favourite this user"><FaStar /></button></li>
+                              : <li><button className="button disabled" disabled={true} onClick={handleFavourite} aria-label="Favourite this user" title="Favourite this user"><FaStar /></button></li>
                           }
                           <li><Link to="/" className="button"><FaArrowLeft />Search</Link></li>
                         </ul>
@@ -323,7 +323,7 @@ const App = () => {
                       </ul>
                       <ul className="date-link-container">
                         <li><p>{user.userObj.location}</p></li>
-                        <li><Link onClick={favoriteApiCall} to="/user" aria-label="View user stats" title="View user stats"><DiGithubBadge /></Link></li>
+                        <li><Link onClick={favouriteApiCall} to="/user" aria-label="View user stats" title="View user stats"><DiGithubBadge /></Link></li>
                       </ul>
                     </div>
                   )
