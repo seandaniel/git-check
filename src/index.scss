@@ -418,7 +418,7 @@ h3 {
   }
 }
 
-// Favorites.js
+// Favourites.js
 .user-card-container {
   display: flex;
   flex-wrap: wrap;
@@ -446,7 +446,7 @@ h3 {
     // repo-card + repo-card + repo-card margin-right
     width: calc(330px + 330px + 55px);
     .user-card:nth-child(3n) {
-      margin-right: 55px;
+      margin-right: 50px;
     }
     .user-card:nth-child(2n) {
       margin-right: 0;

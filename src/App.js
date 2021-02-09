@@ -17,24 +17,22 @@ import Error from './Components/Error';
 
 const App = () => {
 
-  // GitHub APIS
+  // GitHub APIs
   const [userInfo, setUserInfo] = useState({});
   const [repoInfo, setRepoInfo] = useState([]);
 
   const [isLoading, toggleIsLoading] = useState(true);
   const [results, toggleResults] = useState(false);
+  const [noLanguages, toggleNoLanguages] = useState(false);
 
-  // Firebase
-  const [favorites, setFavorites] = useState({
+  const [favourites, setFavourites] = useState({
     userName: '',
     img: '',
     location: '',
   })
 
-  const [nameFavoritesArray, setNameFavoritesArray] = useState([]);
-  const [totalFavorites, setTotalFavorites] = useState([]);
-  const [noLanguages, toggleNoLanguages] = useState(false);
-
+  const [nameFavouritesArray, setNameFavouritesArray] = useState([]);
+  const [totalFavourites, setTotalFavourites] = useState([]);
   const [buttonDisable, toggleButtonDisabled] = useState(false);
 
   async function apiCall(value) {
@@ -53,21 +51,21 @@ const App = () => {
       setUserInfo([response[0].data]);
       setRepoInfo(response[1].data);
 
-      // if location is null, set it to Planet Earth
       if (response[0].data.location !== null) {
-        setFavorites({
+        setFavourites({
           userName: value.toLowerCase(),
           img: response[0].data.avatar_url,
           location: response[0].data.location,
         })
       } else {
-        setFavorites({
+        setFavourites({
           userName: value.toLowerCase(),
           img: response[0].data.avatar_url,
           location: 'Planet Earth',
         })
       }
 
+      // chart.js 
       const repos = response[1].data;
 
       let languagesArray = [];
@@ -77,16 +75,15 @@ const App = () => {
       })
 
       const languagesObject = languagesArray.reduce((obj, repo) => {
-        // if we do not have that property, add it with the value of 0
+        // if we do not have that property, add it with the value of 1
         if (!obj[repo]) {
           obj[repo] = 0;
         }
-        // if we do have that property, add one to the value
+
         obj[repo]++;
         return obj;
       }, {})
 
-      // remove languages that are not specified
       delete languagesObject.null;
 
       let languageNames = Object.keys(languagesObject);
@@ -96,13 +93,6 @@ const App = () => {
       toggleResults(true);
       toggleNoLanguages(false);
       toggleButtonDisabled(false);
-
-      // fisher-yates shuffle
-      const shuffle = (array) => {
-        for (let j, x, i = array.length; i; j = parseInt(Math.random() * i),
-          x = array[--i], array[i] = array[j], array[j] = x);
-        return array;
-      };
 
       const languageColors = [
         'rgba(75, 137, 208, 0.7)',
@@ -121,6 +111,13 @@ const App = () => {
         'rgba(166, 31, 31, 0.7)',
         'rgba(8, 14, 90, 0.7)',
       ];
+
+      // fisher-yates shuffle
+      const shuffle = (array) => {
+        for (let j, x, i = array.length; i; j = parseInt(Math.random() * i),
+          x = array[--i], array[i] = array[j], array[j] = x);
+        return array;
+      };
 
       shuffle(languageColors);
 
@@ -151,13 +148,11 @@ const App = () => {
         }
       });
 
-      // if there is no languages, don't show chart
       if (languageNames.length === 0) {
         toggleNoLanguages(true);
       }
 
-      // if the user is already favorited, disable the button
-      if (nameFavoritesArray.includes(value.toLowerCase())) {
+      if (nameFavouritesArray.includes(value.toLowerCase())) {
         toggleButtonDisabled(true);
       }
 
@@ -184,16 +179,13 @@ const App = () => {
         });
       }
 
-      setTotalFavorites(newState);
+      setTotalFavourites(newState);
 
       let userNameArray = [];
 
-      // pushing all favorite usernames into an array
       newState.map((userName) => {
-
         userNameArray.push(userName.userObj.name);
-        return setNameFavoritesArray(userNameArray);
-
+        return setNameFavouritesArray(userNameArray);
       })
 
     });
@@ -203,13 +195,12 @@ const App = () => {
 
   const handleFavorite = () => {
 
-    // no duplicate favorites
-    if (nameFavoritesArray.includes(favorites.userName) === false) {
+    if (nameFavouritesArray.includes(favourites.userName) === false) {
 
       const user = {
-        name: favorites.userName.toLowerCase(),
-        profilePicture: favorites.img,
-        location: favorites.location,
+        name: favourites.userName.toLowerCase(),
+        profilePicture: favourites.img,
+        location: favourites.location,
       }
 
       const dbRef = firebase.database().ref();
@@ -222,9 +213,7 @@ const App = () => {
   }
 
   const favoriteApiCall = (e) => {
-    // target the closest child (h3), grab the text content and remove the first character (@)
     const userName = e.target.closest('.user-card').firstChild.textContent.slice(1);
-    // second api call instead of storing all favorite user info into firebase, this way, you will get up-to-date stats
     apiCall(userName);
   }
 
@@ -319,13 +308,13 @@ const App = () => {
                   </main>
             }
           </Route>
-          <Route exact path='/favorites'>
+          <Route exact path='/favourites'>
             <nav>
               <Link to="/" className="button"><FaArrowLeft />Search</Link>
             </nav>
             <section className="user-card-container">
               {
-                totalFavorites.map((user) => {
+                totalFavourites.map((user) => {
                   return (
                     <div key={user.key} className="user-card">
                       <ul className="img-h4-container">

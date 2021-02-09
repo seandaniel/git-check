@@ -15,7 +15,6 @@ const LandingPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.apiCall(userName);
-    // props.history is identical to using a redirect, depending on a certain state in the return
     props.history.push('/user');
     setUsername('');
   }
@@ -28,7 +27,7 @@ const LandingPage = (props) => {
     <>
       <header>
         <nav>
-          <Link to="/favorites" className="button"><FaStar />Favorites</Link>
+          <Link to="/favourites" className="button"><FaStar />Favourites</Link>
         </nav>
         <div className="h1-form-container">
           <div className="icon-h1-container">

@@ -19,7 +19,7 @@ const Bio = ({ user_id, avatar_url, name, html_url, login, location, created_at,
           <p><FaCalendarAlt />Joined <Moment format="MMMM DD, YYYY">{created_at}</Moment></p>
         </div>
         {
-          // if user has 1 repo, set span text to Repo
+          // if user has 1 repo, set span text to repo
           public_repos === 1
             ? <p className="repos"><span>{public_repos}</span><span>Repo</span></p>
             : <p className="repos"><span>{public_repos}</span><span>Repos</span></p>
